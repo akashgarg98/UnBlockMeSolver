@@ -1,0 +1,13 @@
+\begin{theindex}
+
+  \item UnBlockMeSolver \textit{(package)}, \hyperpage{2}
+    \subitem UnBlockMeSolver.Map \textit{(package)}, \hyperpage{3}
+      \subsubitem UnBlockMeSolver.Map.mapReader \textit{(module)}, 
+		\hyperpage{4--5}
+    \subitem UnBlockMeSolver.Solver \textit{(package)}, \hyperpage{6}
+
+  \indexspace
+
+  \item x     intercept, \hyperpage{4}
+
+\end{theindex}
