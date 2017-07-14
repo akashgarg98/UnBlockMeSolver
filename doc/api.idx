@@ -1,13 +1,44 @@
-\indexentry{UnBlockMeSolver \textit{(package)}|(hyperpage}{2}
-\indexentry{UnBlockMeSolver \textit{(package)}|)hyperpage}{2}
-\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.Map \textit{(package)}|(hyperpage}{3}
-\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.Map \textit{(package)}|)hyperpage}{3}
-\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.Map \textit{(package)}!UnBlockMeSolver.Map.mapReader \textit{(module)}|(hyperpage}{4}
-\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.Map \textit{(package)}!UnBlockMeSolver.Map.mapReader \textit{(module)}!UnBlockMeSolver.Map.mapReader.MapReader \textit{(class)}|(hyperpage}{4}
-\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.Map \textit{(package)}!UnBlockMeSolver.Map.mapReader \textit{(module)}!UnBlockMeSolver.Map.mapReader.MapReader \textit{(class)}!UnBlockMeSolver.Map.mapReader.MapReader.load \textit{(method)}|hyperpage}{4}
-\indexentry{x     intercept|hyperpage}{4}
-\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.Map \textit{(package)}!UnBlockMeSolver.Map.mapReader \textit{(module)}!UnBlockMeSolver.Map.mapReader.MapReader \textit{(class)}!UnBlockMeSolver.Map.mapReader.MapReader.get \textit{(method)}|hyperpage}{4}
-\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.Map \textit{(package)}!UnBlockMeSolver.Map.mapReader \textit{(module)}!UnBlockMeSolver.Map.mapReader.MapReader \textit{(class)}|)hyperpage}{5}
-\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.Map \textit{(package)}!UnBlockMeSolver.Map.mapReader \textit{(module)}|)hyperpage}{5}
-\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.Solver \textit{(package)}|(hyperpage}{6}
-\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.Solver \textit{(package)}|)hyperpage}{6}
+\indexentry{UnBlockMeSolver \textit{(package)}|(hyperpage}{3}
+\indexentry{UnBlockMeSolver \textit{(package)}|)hyperpage}{3}
+\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.Map \textit{(package)}|(hyperpage}{4}
+\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.Map \textit{(package)}|)hyperpage}{4}
+\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.Map \textit{(package)}!UnBlockMeSolver.Map.Map \textit{(module)}|(hyperpage}{5}
+\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.Map \textit{(package)}!UnBlockMeSolver.Map.Map \textit{(module)}!UnBlockMeSolver.Map.Map.Map \textit{(class)}|(hyperpage}{5}
+\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.Map \textit{(package)}!UnBlockMeSolver.Map.Map \textit{(module)}!UnBlockMeSolver.Map.Map.Map \textit{(class)}!UnBlockMeSolver.Map.Map.Map.isValid \textit{(method)}|hyperpage}{5}
+\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.Map \textit{(package)}!UnBlockMeSolver.Map.Map \textit{(module)}!UnBlockMeSolver.Map.Map.Map \textit{(class)}|)hyperpage}{5}
+\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.Map \textit{(package)}!UnBlockMeSolver.Map.Map \textit{(module)}|)hyperpage}{5}
+\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.Map \textit{(package)}!UnBlockMeSolver.Map.mapReader \textit{(module)}|(hyperpage}{6}
+\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.Map \textit{(package)}!UnBlockMeSolver.Map.mapReader \textit{(module)}!UnBlockMeSolver.Map.mapReader.MapReader \textit{(class)}|(hyperpage}{6}
+\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.Map \textit{(package)}!UnBlockMeSolver.Map.mapReader \textit{(module)}!UnBlockMeSolver.Map.mapReader.MapReader \textit{(class)}!UnBlockMeSolver.Map.mapReader.MapReader.load \textit{(method)}|hyperpage}{6}
+\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.Map \textit{(package)}!UnBlockMeSolver.Map.mapReader \textit{(module)}!UnBlockMeSolver.Map.mapReader.MapReader \textit{(class)}!UnBlockMeSolver.Map.mapReader.MapReader.get \textit{(method)}|hyperpage}{6}
+\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.Map \textit{(package)}!UnBlockMeSolver.Map.mapReader \textit{(module)}!UnBlockMeSolver.Map.mapReader.MapReader \textit{(class)}|)hyperpage}{7}
+\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.Map \textit{(package)}!UnBlockMeSolver.Map.mapReader \textit{(module)}|)hyperpage}{7}
+\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.Solver \textit{(package)}|(hyperpage}{8}
+\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.Solver \textit{(package)}|)hyperpage}{8}
+\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.test \textit{(package)}|(hyperpage}{9}
+\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.test \textit{(package)}|)hyperpage}{9}
+\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.test \textit{(package)}!UnBlockMeSolver.test.MapTests \textit{(package)}|(hyperpage}{10}
+\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.test \textit{(package)}!UnBlockMeSolver.test.MapTests \textit{(package)}|)hyperpage}{10}
+\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.test \textit{(package)}!UnBlockMeSolver.test.MapTests \textit{(package)}!UnBlockMeSolver.test.MapTests.mapTests \textit{(module)}|(hyperpage}{11}
+\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.test \textit{(package)}!UnBlockMeSolver.test.MapTests \textit{(package)}!UnBlockMeSolver.test.MapTests.mapTests \textit{(module)}!UnBlockMeSolver.test.MapTests.mapTests.TestMap \textit{(class)}|(hyperpage}{11}
+\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.test \textit{(package)}!UnBlockMeSolver.test.MapTests \textit{(package)}!UnBlockMeSolver.test.MapTests.mapTests \textit{(module)}!UnBlockMeSolver.test.MapTests.mapTests.TestMap \textit{(class)}!UnBlockMeSolver.test.MapTests.mapTests.TestMap.test\_init \textit{(method)}|hyperpage}{11}
+\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.test \textit{(package)}!UnBlockMeSolver.test.MapTests \textit{(package)}!UnBlockMeSolver.test.MapTests.mapTests \textit{(module)}!UnBlockMeSolver.test.MapTests.mapTests.TestMap \textit{(class)}|)hyperpage}{12}
+\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.test \textit{(package)}!UnBlockMeSolver.test.MapTests \textit{(package)}!UnBlockMeSolver.test.MapTests.mapTests \textit{(module)}|)hyperpage}{12}
+\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.test \textit{(package)}!UnBlockMeSolver.test.MapTests \textit{(package)}!UnBlockMeSolver.test.MapTests.readerTests \textit{(module)}|(hyperpage}{13}
+\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.test \textit{(package)}!UnBlockMeSolver.test.MapTests \textit{(package)}!UnBlockMeSolver.test.MapTests.readerTests \textit{(module)}!UnBlockMeSolver.test.MapTests.readerTests.TestReader \textit{(class)}|(hyperpage}{13}
+\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.test \textit{(package)}!UnBlockMeSolver.test.MapTests \textit{(package)}!UnBlockMeSolver.test.MapTests.readerTests \textit{(module)}!UnBlockMeSolver.test.MapTests.readerTests.TestReader \textit{(class)}!UnBlockMeSolver.test.MapTests.readerTests.TestReader.test\_is\_loaded \textit{(method)}|hyperpage}{13}
+\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.test \textit{(package)}!UnBlockMeSolver.test.MapTests \textit{(package)}!UnBlockMeSolver.test.MapTests.readerTests \textit{(module)}!UnBlockMeSolver.test.MapTests.readerTests.TestReader \textit{(class)}!UnBlockMeSolver.test.MapTests.readerTests.TestReader.test\_is\_found \textit{(method)}|hyperpage}{13}
+\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.test \textit{(package)}!UnBlockMeSolver.test.MapTests \textit{(package)}!UnBlockMeSolver.test.MapTests.readerTests \textit{(module)}!UnBlockMeSolver.test.MapTests.readerTests.TestReader \textit{(class)}!UnBlockMeSolver.test.MapTests.readerTests.TestReader.test\_get \textit{(method)}|hyperpage}{13}
+\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.test \textit{(package)}!UnBlockMeSolver.test.MapTests \textit{(package)}!UnBlockMeSolver.test.MapTests.readerTests \textit{(module)}!UnBlockMeSolver.test.MapTests.readerTests.TestReader \textit{(class)}|)hyperpage}{14}
+\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.test \textit{(package)}!UnBlockMeSolver.test.MapTests \textit{(package)}!UnBlockMeSolver.test.MapTests.readerTests \textit{(module)}|)hyperpage}{14}
+\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.test \textit{(package)}!UnBlockMeSolver.test.Sample \textit{(package)}|(hyperpage}{15}
+\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.test \textit{(package)}!UnBlockMeSolver.test.Sample \textit{(package)}|)hyperpage}{15}
+\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.test \textit{(package)}!UnBlockMeSolver.test.Sample \textit{(package)}!UnBlockMeSolver.test.Sample.sampleTests \textit{(module)}|(hyperpage}{16}
+\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.test \textit{(package)}!UnBlockMeSolver.test.Sample \textit{(package)}!UnBlockMeSolver.test.Sample.sampleTests \textit{(module)}!UnBlockMeSolver.test.Sample.sampleTests.TestStringMethods \textit{(class)}|(hyperpage}{16}
+\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.test \textit{(package)}!UnBlockMeSolver.test.Sample \textit{(package)}!UnBlockMeSolver.test.Sample.sampleTests \textit{(module)}!UnBlockMeSolver.test.Sample.sampleTests.TestStringMethods \textit{(class)}!UnBlockMeSolver.test.Sample.sampleTests.TestStringMethods.test\_upper \textit{(method)}|hyperpage}{16}
+\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.test \textit{(package)}!UnBlockMeSolver.test.Sample \textit{(package)}!UnBlockMeSolver.test.Sample.sampleTests \textit{(module)}!UnBlockMeSolver.test.Sample.sampleTests.TestStringMethods \textit{(class)}!UnBlockMeSolver.test.Sample.sampleTests.TestStringMethods.test\_isupper \textit{(method)}|hyperpage}{16}
+\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.test \textit{(package)}!UnBlockMeSolver.test.Sample \textit{(package)}!UnBlockMeSolver.test.Sample.sampleTests \textit{(module)}!UnBlockMeSolver.test.Sample.sampleTests.TestStringMethods \textit{(class)}!UnBlockMeSolver.test.Sample.sampleTests.TestStringMethods.test\_split \textit{(method)}|hyperpage}{16}
+\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.test \textit{(package)}!UnBlockMeSolver.test.Sample \textit{(package)}!UnBlockMeSolver.test.Sample.sampleTests \textit{(module)}!UnBlockMeSolver.test.Sample.sampleTests.TestStringMethods \textit{(class)}|)hyperpage}{17}
+\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.test \textit{(package)}!UnBlockMeSolver.test.Sample \textit{(package)}!UnBlockMeSolver.test.Sample.sampleTests \textit{(module)}|)hyperpage}{17}
+\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.test \textit{(package)}!UnBlockMeSolver.test.files \textit{(module)}|(hyperpage}{18}
+\indexentry{UnBlockMeSolver \textit{(package)}!UnBlockMeSolver.test \textit{(package)}!UnBlockMeSolver.test.files \textit{(module)}|)hyperpage}{18}

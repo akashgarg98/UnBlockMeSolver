@@ -1,15 +1,12 @@
-import Map
 from Map.mapReader import MapReader
+from test import files
 import unittest
 
 class TestReader(unittest.TestCase):
 
-	real_file = "Reader/example_map.map"
-	bad_file  = "Reader/doesnt_exist.map"
-
 	def test_is_loaded(self):
 		t1 = MapReader()
-		t1.load(self.real_file)
+		t1.load(files.real_file)
 
 		# test if we have loaded the file
 		self.assertFalse(t1.loaded)
@@ -17,7 +14,7 @@ class TestReader(unittest.TestCase):
 	def test_is_found(self):
 		## test on valid file
 		t1 = MapReader()
-		t1.load(self.real_file)
+		t1.load(files.real_file)
 
 		# test if we have loaded the file
 		self.assertTrue(t1.file_found)
@@ -27,7 +24,22 @@ class TestReader(unittest.TestCase):
 
 		# ioerror should be thrown
 		with self.assertRaises(IOError):
-			t2.load(self.bad_file)
+			t2.load(files.bad_file)
+
+		# make sure that the file found flag is still false
+		self.assertFalse(t2.file_found)
+
+	def test_get(self):
+		## test if the file found works
+		t1 = MapReader()
+		t1.load(files.sample_file)
+		result = t1.get()
+
+		# check type
+		self.assertTrue(type(result) == str)
+
+		# check if string is valid
+		self.assertTrue(result == "sample_string")
 
 if __name__ == '__main__':
-    unittest.main()
+	unittest.main()

@@ -5,12 +5,46 @@
 \BOOKMARK [1][-]{section.2}{Package UnBlockMeSolver.Map}{}% 5
 \BOOKMARK [2][-]{subsection.2.1}{Modules}{section.2}% 6
 \BOOKMARK [2][-]{subsection.2.2}{Variables}{section.2}% 7
-\BOOKMARK [1][-]{section.3}{Module UnBlockMeSolver.Map.mapReader}{}% 8
+\BOOKMARK [1][-]{section.3}{Module UnBlockMeSolver.Map.Map}{}% 8
 \BOOKMARK [2][-]{subsection.3.1}{Variables}{section.3}% 9
-\BOOKMARK [2][-]{subsection.3.2}{Class MapReader}{section.3}% 10
+\BOOKMARK [2][-]{subsection.3.2}{Class Map}{section.3}% 10
 \BOOKMARK [3][-]{subsubsection.3.2.1}{Methods}{subsection.3.2}% 11
 \BOOKMARK [3][-]{subsubsection.3.2.2}{Properties}{subsection.3.2}% 12
-\BOOKMARK [3][-]{subsubsection.3.2.3}{Class Variables}{subsection.3.2}% 13
-\BOOKMARK [1][-]{section.4}{Package UnBlockMeSolver.Solver}{}% 14
-\BOOKMARK [2][-]{subsection.4.1}{Variables}{section.4}% 15
-\BOOKMARK [1][-]{section*.2}{Index}{}% 16
+\BOOKMARK [1][-]{section.4}{Module UnBlockMeSolver.Map.mapReader}{}% 13
+\BOOKMARK [2][-]{subsection.4.1}{Variables}{section.4}% 14
+\BOOKMARK [2][-]{subsection.4.2}{Class MapReader}{section.4}% 15
+\BOOKMARK [3][-]{subsubsection.4.2.1}{Methods}{subsection.4.2}% 16
+\BOOKMARK [3][-]{subsubsection.4.2.2}{Properties}{subsection.4.2}% 17
+\BOOKMARK [3][-]{subsubsection.4.2.3}{Class Variables}{subsection.4.2}% 18
+\BOOKMARK [1][-]{section.5}{Package UnBlockMeSolver.Solver}{}% 19
+\BOOKMARK [2][-]{subsection.5.1}{Variables}{section.5}% 20
+\BOOKMARK [1][-]{section.6}{Package UnBlockMeSolver.test}{}% 21
+\BOOKMARK [2][-]{subsection.6.1}{Modules}{section.6}% 22
+\BOOKMARK [2][-]{subsection.6.2}{Variables}{section.6}% 23
+\BOOKMARK [1][-]{section.7}{Package UnBlockMeSolver.test.MapTests}{}% 24
+\BOOKMARK [2][-]{subsection.7.1}{Modules}{section.7}% 25
+\BOOKMARK [2][-]{subsection.7.2}{Variables}{section.7}% 26
+\BOOKMARK [1][-]{section.8}{Module UnBlockMeSolver.test.MapTests.mapTests}{}% 27
+\BOOKMARK [2][-]{subsection.8.1}{Variables}{section.8}% 28
+\BOOKMARK [2][-]{subsection.8.2}{Class TestMap}{section.8}% 29
+\BOOKMARK [3][-]{subsubsection.8.2.1}{Methods}{subsection.8.2}% 30
+\BOOKMARK [3][-]{subsubsection.8.2.2}{Properties}{subsection.8.2}% 31
+\BOOKMARK [3][-]{subsubsection.8.2.3}{Class Variables}{subsection.8.2}% 32
+\BOOKMARK [1][-]{section.9}{Module UnBlockMeSolver.test.MapTests.readerTests}{}% 33
+\BOOKMARK [2][-]{subsection.9.1}{Variables}{section.9}% 34
+\BOOKMARK [2][-]{subsection.9.2}{Class TestReader}{section.9}% 35
+\BOOKMARK [3][-]{subsubsection.9.2.1}{Methods}{subsection.9.2}% 36
+\BOOKMARK [3][-]{subsubsection.9.2.2}{Properties}{subsection.9.2}% 37
+\BOOKMARK [3][-]{subsubsection.9.2.3}{Class Variables}{subsection.9.2}% 38
+\BOOKMARK [1][-]{section.10}{Package UnBlockMeSolver.test.Sample}{}% 39
+\BOOKMARK [2][-]{subsection.10.1}{Modules}{section.10}% 40
+\BOOKMARK [2][-]{subsection.10.2}{Variables}{section.10}% 41
+\BOOKMARK [1][-]{section.11}{Module UnBlockMeSolver.test.Sample.sampleTests}{}% 42
+\BOOKMARK [2][-]{subsection.11.1}{Variables}{section.11}% 43
+\BOOKMARK [2][-]{subsection.11.2}{Class TestStringMethods}{section.11}% 44
+\BOOKMARK [3][-]{subsubsection.11.2.1}{Methods}{subsection.11.2}% 45
+\BOOKMARK [3][-]{subsubsection.11.2.2}{Properties}{subsection.11.2}% 46
+\BOOKMARK [3][-]{subsubsection.11.2.3}{Class Variables}{subsection.11.2}% 47
+\BOOKMARK [1][-]{section.12}{Module UnBlockMeSolver.test.files}{}% 48
+\BOOKMARK [2][-]{subsection.12.1}{Variables}{section.12}% 49
+\BOOKMARK [1][-]{section*.2}{Index}{}% 50

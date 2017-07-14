@@ -1,5 +1,5 @@
 tests:
-	$(shell python -m unittest discover -s test/* -p '*.py')
+	$(shell python -m unittest discover -s test -p '*Tests.py')
 
 doc:
 	@echo "Generating documentation in doc folder."
