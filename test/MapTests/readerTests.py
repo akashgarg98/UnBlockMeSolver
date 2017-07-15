@@ -6,7 +6,7 @@ class TestReader(unittest.TestCase):
 
 	def test_is_loaded(self):
 		t1 = MapReader()
-		t1.load(files.real_file)
+		t1.load(files.good)
 
 		# test if we have loaded the file
 		self.assertFalse(t1.loaded)
@@ -14,7 +14,7 @@ class TestReader(unittest.TestCase):
 	def test_is_found(self):
 		## test on valid file
 		t1 = MapReader()
-		t1.load(files.real_file)
+		t1.load(files.good)
 
 		# test if we have loaded the file
 		self.assertTrue(t1.file_found)
@@ -24,7 +24,7 @@ class TestReader(unittest.TestCase):
 
 		# ioerror should be thrown
 		with self.assertRaises(IOError):
-			t2.load(files.bad_file)
+			t2.load(files.not_real)
 
 		# make sure that the file found flag is still false
 		self.assertFalse(t2.file_found)
@@ -32,7 +32,7 @@ class TestReader(unittest.TestCase):
 	def test_get(self):
 		## test if the file found works
 		t1 = MapReader()
-		t1.load(files.sample_file)
+		t1.load(files.sample)
 		result = t1.get()
 
 		# check type

@@ -17,6 +17,11 @@ class Map(object):
 		self.graph     = graph
 		self.delimeter = delimeter
 
+	def convertToMap(self):
+		# split the string by the delimeter to create the graph
+		self.graph = self.graph.split(self.delimeter)
+		self.graph = [list(self.graph[i]) for i in range(len(self.graph))]
+
 	def setUp(self):
 		"""
 		Set up the Map class and set the graph by either getting a
@@ -33,8 +38,8 @@ class Map(object):
 		if type(self.graph) != str:
 			raise TypeError("Incorrect type given to Map class (must be string or MapReader).")
 
-		# split the string by the delimeter to create the graph
-		self.graph = self.graph.split(self.delimeter)
+		# convert the graph into a matrix that is reassignable
+		self.convertToMap()
 
 		# check if the graph created is valid
 		if not self.isValid():
@@ -95,6 +100,8 @@ class Map(object):
 			if col_length != len(self.graph[i]):
 				return False
 
+		return True
+
 	def topBottomRowsValid(self, num_goals_found):
 		"""
 		Update documentation
@@ -120,6 +127,17 @@ class Map(object):
 
 		return True, num_goals_found
 
+	def playerFound(self):
+		"""
+		Update documentation
+		"""
+		# loop through avoiding the edges in the map
+		for i in range(1, len(self.graph) - 1):
+			if self.player in ''.join(self.graph[i]):
+				return True
+		return False
+
+
 	def isValid(self):
 		"""
 		Test if the graph in the map class is valid or not
@@ -127,6 +145,12 @@ class Map(object):
 		@rtype:  boolean
 		@returN: graph is valid or not
 		"""
+		# there must be atleast 3 rows in the graph else, the 
+		# puzzle can't be solved
+		if len(self.graph) < 3:
+			return False
+
+		# make sure the number of columsn for each row works
 		if not self.numColumnsMatch():
 			return False
 
@@ -144,9 +168,10 @@ class Map(object):
 		if not topBotValid:
 			return False
 
-		# Check to make sure player is in the game
-		print "player not checked for yet"
-
 		# now make sure there is only one goal and return the result
-		return num_goals_found == 1
+		if num_goals_found != 1:
+			return False
+
+		# Check to make sure player is in the game and return the result
+		return self.playerFound()
 		
