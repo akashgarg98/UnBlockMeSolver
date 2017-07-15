@@ -18,8 +18,14 @@ class Map(object):
 		self.delimeter = delimeter
 
 	def convertToMap(self):
+		"""
+		Convert the graph into a matrix that can be viewed and modified.
+		"""
 		# split the string by the delimeter to create the graph
 		self.graph = self.graph.split(self.delimeter)
+
+		# turn each string into an array of characters and make the new
+		# array a member of the matrix
 		self.graph = [list(self.graph[i]) for i in range(len(self.graph))]
 
 	def setUp(self):
@@ -56,6 +62,8 @@ class Map(object):
 		@param point: the point being checked in the graph. 
 		@type num_goals_found:  integer
 		@param num_goals_found: number of goals in the graph currently found
+		@rtype:                 boolean, integer
+		@return:                if the point is a wall or a goal and number of goals currently found
 		"""
 		# if it isn't a wall
 		if point != self.wall: 
@@ -75,10 +83,13 @@ class Map(object):
 		larger row indicates that it is either the top or the bottom
 		of the graph. 
 
-		@type row_index:  integer
-		@param row_index: index for the row to be checked
+		@type row_index:        integer
+		@param row_index:       index for the row to be checked
 		@type num_goals_found:  integer
 		@param num_goals_found: the number of goals that have been found
+		@rtype:                 boolean, integer
+		@return:                If a large row provided is valid and number of 
+		                        goals currently found
 		"""
 		for j in range(len(self.graph[row_index])):
 			result, num_goals_found = self.isWallOrGoal(self.graph[row_index][j], num_goals_found)
@@ -92,9 +103,11 @@ class Map(object):
 
 	def numColumnsMatch(self):
 		"""
-		Update documentation
+		Ensure that the number of columns matches for each row.
+
+		@rtype:  boolean
+		@return: if the number of columns matches for each row
 		"""
-		# check if the number of columns is the same as every row
 		col_length = len(self.graph[0])
 		for i in range(1, len(self.graph)):
 			if col_length != len(self.graph[i]):
@@ -104,7 +117,14 @@ class Map(object):
 
 	def topBottomRowsValid(self, num_goals_found):
 		"""
-		Update documentation
+		Make sure that both the top and bottom rows are valid according
+		to the topBottomRowsValid function.
+
+		@type num_goals_found:  integer
+		@param num_goals_found: number of goals presently found
+		@rtype:                 boolean, integer
+		@return:                If the top and bottom rows are valid and 
+		                        number of goals currently found 
 		"""
 		# first check the first and last row
 		valid_first,  num_goals_found = self.largeRowValid(0, num_goals_found)
@@ -115,10 +135,16 @@ class Map(object):
 
 	def midRowsValid(self, num_goals_found):
 		"""
-		Update documentation
+		Ensure that all the middle rows are valid entries with walls or
+		a goal on both sides.
+
+		@type num_goals_found:  integer
+		@param num_goals_found: number of goals presently found
+		@rtype:                 boolean, integer
+		@return:                if the middle rows are valid and the number
+		                        of goals currently found
 		"""
-		# now check to make sure the other rows are surrounded by walls
-		for i in range(len(self.graph)):
+		for i in range(0, len(self.graph) - 1):
 			close_result, num_goals_found = self.isWallOrGoal(self.graph[i][0], num_goals_found)
 			far_result,   num_goals_found = self.isWallOrGoal(self.graph[i][len(self.graph[i]) - 1], num_goals_found)
 
@@ -129,7 +155,10 @@ class Map(object):
 
 	def playerFound(self):
 		"""
-		Update documentation
+		Check to see if the player, defined in Map.py, is in the map.
+
+		@rtype:  boolean
+		@return: player found in map
 		"""
 		# loop through avoiding the edges in the map
 		for i in range(1, len(self.graph) - 1):
@@ -140,10 +169,10 @@ class Map(object):
 
 	def isValid(self):
 		"""
-		Test if the graph in the map class is valid or not
+		Test if the graph in the map class is valid or not.
 
 		@rtype:  boolean
-		@returN: graph is valid or not
+		@return: graph is valid or not
 		"""
 		# there must be atleast 3 rows in the graph else, the 
 		# puzzle can't be solved
