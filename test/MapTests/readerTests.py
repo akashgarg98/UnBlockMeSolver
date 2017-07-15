@@ -1,4 +1,4 @@
-from Map.mapReader import MapReader
+from Map.MapReader import MapReader
 from test import files
 import unittest
 

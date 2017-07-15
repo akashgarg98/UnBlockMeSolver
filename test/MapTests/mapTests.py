@@ -1,5 +1,5 @@
-from Map.mapReader import MapReader
-from Map.mapReader import Map
+from Map.MapReader import MapReader
+from Map.Map import Map
 from test import files
 import unittest
 import copy

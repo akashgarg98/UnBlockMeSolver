@@ -1,3 +1,5 @@
+from Move import Move
+
 class Map(object):
 
 	wall   = "|"
@@ -166,7 +168,6 @@ class Map(object):
 				return True
 		return False
 
-
 	def isValid(self):
 		"""
 		Test if the graph in the map class is valid or not.
@@ -203,4 +204,33 @@ class Map(object):
 
 		# Check to make sure player is in the game and return the result
 		return self.playerFound()
+
+	def isValidMove(self, move):
+		if type(move) != type(Move):
+			return False
+
+		raise NotImplementedError("isValidMove not implemented")
+
+	def makeConfidentMove(self, move):
+		raise NotImplementedError("makeConfidentMove not implemented")
+
+	def makeMove(self, move):
+		"""
+		Make a move on the board. Raise syntax error on bad move given
+
+		@type move:  Move
+		@param move: move to make on the board
+		"""
+		if self.isValidMove(move):
+			self.makeConfidentMove(move)
+		else:
+			raise SyntaxError("Invalid move given.")
+
+	def getMoves(self, move):
+		raise NotImplementedError("getMoves not implemented")
+
+	def isSolved(self):
+		raise NotImplementedError("isSolved not implemented")
+
+
 		
