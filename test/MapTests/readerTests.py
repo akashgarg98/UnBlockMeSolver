@@ -36,7 +36,7 @@ class TestReader(unittest.TestCase):
 		result = t1.get()
 
 		# check type
-		self.assertTrue(type(result) == str)
+		self.assertEquals(type(result), str)
 
 		# check if string is valid
 		self.assertTrue(result == "sample_string")
