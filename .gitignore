@@ -102,3 +102,6 @@ ENV/
 
 # ignore generated documentation
 doc/
+
+# ignore generated html code coverage data
+htmlcov/

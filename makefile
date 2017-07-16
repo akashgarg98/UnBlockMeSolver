@@ -1,5 +1,12 @@
 tests:
-	$(shell python -m unittest discover -s test -p '*Tests.py')
+	# @python -m unittest discover -s test -p '*Tests.py' 
+	@coverage run -m unittest discover -s test -p '*Tests.py'
+	@coverage report
+
+html_coverage:
+	@make tests
+	@coverage html
+	@open open htmlcov/index.html
 
 document:
 	@echo "Generating documentation in doc folder."
@@ -19,6 +26,8 @@ lines:
 help:
 	@echo "    tests"
 	@echo "        Run all unit tests."
+	@echo "    html_coverage"
+	@echo "        Open html documentation for the code coverage and run tests." 
 	@echo "    document"
 	@echo "        Create new set of documentation."
 	@echo "    open_doc"
