@@ -1,3 +1,5 @@
+from Move import Move
+
 class Piece(object):
 	def __init__(self, x, y, vertical):
 		"""
@@ -21,7 +23,22 @@ class Piece(object):
 
 	def move(self, move):
 		"""
-		TODO: Update documentation
-		"""
+		Move the piece if the given move is valid
 
-		raise NotImplementedError("not implemented yet.")
+		@type move:  Move
+		@param move: Move that will change the location of the piece
+		"""
+		if type(move) != Move:
+			raise AttributeError("Incorrect type given to move a piece")
+
+		if not move.isValid():
+			raise AttributeError("Move given is not valid and can't be used")
+
+		if self.isVertical:
+			if move.up == 0:
+				raise AttributeError("Horizontal move given for piece that can only move vertically")
+		elif move.right == 0:
+			raise AttributeError("Vertical move given for piece that can only move horizontally")
+
+		self.x += move.right
+		self.y += move.up

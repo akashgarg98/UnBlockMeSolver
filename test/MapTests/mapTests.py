@@ -349,10 +349,72 @@ class TestMap(unittest.TestCase):
 		self.assertTrue(tester.isValidMove(move))
 
 	def test_makeConfidentMove(self):
-		pass
+		# test moving left
+		mr     = MapReader()
+		mr.load(files.left)
+		tester = Map(mr)
+		tester.setUp()
+		tester.makeConfidentMove(Move.left('*'))
+		correct = [['|', '|', '|', '|', '|'], \
+		           ['|', '*', '*', '0', '$'], \
+		           ['|', '|', '|', '|', '|']]
+		self.assertEquals(tester.graph, correct)
+
+		# test moving right
+		mr     = MapReader()
+		mr.load(files.right)
+		tester = Map(mr)
+		tester.setUp()
+		tester.makeConfidentMove(Move.right('*'))
+		correct = [['|', '|', '|', '|', '|'], \
+		           ['|', '0', '*', '*', '$'], \
+		           ['|', '|', '|', '|', '|']]
+		self.assertEquals(tester.graph, correct)
+
+		# test moving down
+		mr     = MapReader()
+		mr.load(files.down)
+		tester = Map(mr)
+		tester.setUp()
+		tester.makeConfidentMove(Move.down('1'))
+		correct = [['|', '|', '|', '|', '|'], \
+		           ['|', '*', '*', '0', '$'], \
+		           ['|', '0', '0', '0', '|'], \
+		           ['|', '1', '0', '0', '|'], \
+		           ['|', '1', '0', '0', '|'], \
+		           ['|', '1', '0', '0', '|'], \
+		           ['|', '|', '|', '|', '|']]
+		self.assertEquals(tester.graph, correct)
+
+		# test moving up
+		mr     = MapReader()
+		mr.load(files.up)
+		tester = Map(mr)
+		tester.setUp()
+		tester.makeConfidentMove(Move.up('1'))
+		correct = [['|', '|', '|', '|', '|'], \
+				   ['|', '*', '*', '0', '$'], \
+				   ['|', '1', '0', '0', '|'], \
+				   ['|', '1', '0', '0', '|'], \
+				   ['|', '0', '0', '0', '|'], \
+				   ['|', '|', '|', '|', '|']]
+		self.assertEquals(tester.graph, correct)
 
 	def test_makeMove(self):
-		pass
+		# test invalid move type
+		mr     = MapReader()
+		mr.load(files.left)
+		tester = Map(mr)
+		tester.setUp()
+		with self.assertRaises(SyntaxError):
+			tester.makeMove(None)
+
+		# test valid move type
+		tester.makeMove(Move.left('*'))
+		correct = [['|', '|', '|', '|', '|'], \
+		           ['|', '*', '*', '0', '$'], \
+		           ['|', '|', '|', '|', '|']]
+		self.assertEquals(tester.graph, correct)
 
 	def test_getMoves(self):
 		# these tests also handle tests for addition and 

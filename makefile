@@ -1,5 +1,4 @@
 tests:
-	# @python -m unittest discover -s test -p '*Tests.py' 
 	@coverage run -m unittest discover -s test -p '*Tests.py'
 	@coverage report
 

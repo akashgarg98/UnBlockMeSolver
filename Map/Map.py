@@ -308,8 +308,33 @@ class Map(object):
 
 		return self.isValidAdditionMove(move) or self.isValidSubtractionMove(move)
 
-	def makeConfidentMove(self, move):	
-		raise NotImplementedError("makeConfidentMove not implemented")
+	def makeConfidentMove(self, move):
+		"""
+		Make a move on the board without checking for its validity.
+
+		@type move:  Move
+		@param move: move to make on the board
+		"""
+		# move on the board
+		x = self.pieces[move.piece].x
+		y = self.pieces[move.piece].y
+
+		# find the point the furthest over and put in a new piece
+		while self.graph[y][x] == move.piece:
+			x += move.right
+			y += move.up
+
+		self.graph[y][x] = move.piece
+
+		# trace back and put in an empty piece in the last avaialble piece
+		while self.graph[y][x] == move.piece:
+			x -= move.right
+			y -= move.up
+
+		self.graph[y + move.up][x + move.right] = self.empty
+
+		# move piece in pieces dictionary
+		self.pieces[move.piece].move(move)
 
 	def makeMove(self, move):
 		"""
