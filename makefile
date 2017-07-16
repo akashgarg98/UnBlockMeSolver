@@ -6,7 +6,7 @@ tests:
 html_coverage:
 	@make tests
 	@coverage html
-	@open open htmlcov/index.html
+	@open htmlcov/index.html
 
 document:
 	@echo "Generating documentation in doc folder."
