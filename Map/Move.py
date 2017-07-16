@@ -1,15 +1,15 @@
 class Move(object):
-	def __init__(self, piece, up, right):
+	def __init__(self, piece, right, up):
 		"""
 		Initialize data structure with required variables. Throws an error
 		on incorrect value ranges and types given
 
 		@type piece:  character 
 		@param piece: The piece to be moved
-		@type up:     integer
-		@param up:    If the piece should be moved up by a space
 		@type right:  integer
 		@param right: If the piece should be to the right by a space
+		@type up:     integer
+		@param up:    If the piece should be moved up by a space
 		"""
 		super(Move, self).__init__()
 		self.piece = piece
@@ -33,5 +33,42 @@ class Move(object):
                 (self.up ==  0 and self.right ==  1) or \
                 (self.up ==  0 and self.right == -1))
 
+	@staticmethod
+	def left(piece):
+		"""
+		Instantiate a move that will go left
 
-		
+		@type piece:  character
+		@param piece: Character that represents the piece to be moved
+		"""
+		return Move(piece, -1, 0)
+
+	@staticmethod
+	def right(piece):
+		"""
+		Instantiate a move that will go right
+
+		@type piece:  character
+		@param piece: Character that represents the piece to be moved
+		"""
+		return Move(piece, 1, 0)
+
+	@staticmethod
+	def up(piece):
+		"""
+		Instantiate a move that will go up
+
+		@type piece:  character
+		@param piece: Character that represents the piece to be moved
+		"""
+		return Move(piece, 0, -1)
+
+	@staticmethod
+	def down(piece):
+		"""
+		Instantiate a move that will go down
+
+		@type piece:  character
+		@param piece: Character that represents the piece to be moved
+		"""
+		return Move(piece, 0, 1)

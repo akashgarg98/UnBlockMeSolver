@@ -6,6 +6,9 @@ document:
 	@if [ -d doc ]; then rm -Rf doc; fi
 	@epydoc -v -o doc --pdf --name "Epydoc" .
 
+open_doc:
+	@open doc/api.pdf
+
 clean:
 	$(shell find . -name "*.pyc" -exec rm -f {} \;)
 	@echo "*.pyc files deleted."
@@ -18,6 +21,8 @@ help:
 	@echo "        Run all unit tests."
 	@echo "    document"
 	@echo "        Create new set of documentation."
+	@echo "    open_doc"
+	@echo "        Open generated documentation."
 	@echo "    clean"
 	@echo "        Remove python pyc files."
 	@echo "    lines"

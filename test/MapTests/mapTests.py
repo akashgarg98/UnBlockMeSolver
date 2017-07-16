@@ -1,4 +1,6 @@
 from Map.MapReader import MapReader
+from Map.Piece import Piece
+from Map.Move import Move
 from Map.Map import Map
 from test import files
 import unittest
@@ -26,6 +28,22 @@ class TestMap(unittest.TestCase):
 
 	default_delimeter = "\n"
 	new_delimeter     = ","
+
+	def test_setUpPieces(self):
+		# test on simple file to make sure the pieces are properly
+		mr     = MapReader()
+		mr.load(files.right)
+		tester = Map(mr)
+		tester.setUp() # this function calls the desired function to be tested
+
+		# make sure only one valid piece is found
+		self.assertEquals(len(tester.pieces), 1)
+
+		# make sure the piece found is coherent to the expected values
+		valid_pieces = Piece(1,1,False)
+		self.assertEquals(tester.pieces['*'].x,          valid_pieces.x)
+		self.assertEquals(tester.pieces['*'].y,          valid_pieces.y)
+		self.assertEquals(tester.pieces['*'].isVertical, valid_pieces.isVertical)
 
 	def test_init(self):
 		## test if string and default delimeter works
@@ -232,6 +250,79 @@ class TestMap(unittest.TestCase):
 		tester = Map(mr)
 		with self.assertRaises(SyntaxError):
 			tester.setUp()
+
+	def validate_move(self, move1, move2):
+		self.assertEquals(move1.piece, move2.piece)
+		self.assertEquals(move1.up,    move2.up)
+		self.assertEquals(move1.right, move2.right)
+		self.assertTrue(move1.isValid())
+
+	def validate_moves(self, moves1, moves2):
+		self.assertEquals(len(moves1), len(moves2))
+
+		for i in range(len(moves1)):
+			self.validate_move(moves1[i], moves2[i])
+
+	def test_isValidMove(self):
+		pass
+
+	def test_makeConfidentMove(self):
+		pass
+
+	def test_makeMove(self):
+		pass
+
+	def test_getMoves(self):
+		# these tests also handle tests for addition and 
+		# subtraction moves
+
+		# test on map where only right move is possible
+		mr     = MapReader()
+		mr.load(files.right)
+		tester = Map(mr)
+		tester.setUp()
+		valid_moves = [Move.right('*')]
+		found_moves = tester.getMoves()
+		self.validate_moves(valid_moves, found_moves)
+
+		# test on map where only left move is possible
+		mr     = MapReader()
+		mr.load(files.left)
+		tester = Map(mr)
+		tester.setUp()
+		valid_moves = [Move.left('*')]
+		found_moves = tester.getMoves()
+		self.validate_moves(valid_moves, found_moves)
+
+		# test on map where only up move is possible
+		mr     = MapReader()
+		mr.load(files.up)
+		tester = Map(mr)
+		tester.setUp()
+		valid_moves = [Move.up('1'), Move.right('*')]
+		found_moves = tester.getMoves()
+		self.validate_moves(valid_moves, found_moves)
+
+		# test on map where only down move is possible
+		mr     = MapReader()
+		mr.load(files.down)
+		tester = Map(mr)
+		tester.setUp()
+		valid_moves = [Move.down('1'), Move.right('*')]
+		found_moves = tester.getMoves()
+		self.validate_moves(valid_moves, found_moves)
+
+		# test where no move is possible
+		mr     = MapReader()
+		mr.load(files.no_move)
+		tester = Map(mr)
+		tester.setUp()
+		valid_moves = []
+		found_moves = tester.getMoves()
+		self.validate_moves(valid_moves, found_moves)
+
+	def test_isSolved(self):
+		pass
 
 if __name__ == '__main__':
     unittest.main()

@@ -42,7 +42,7 @@ class TestMove(unittest.TestCase):
 
 	def test_isValid(self):
 		# test if a valid move is valid
-		move = Move('a',1,0)
+		move = Move('a',0,1)
 		self.assertTrue(move.isValid())
 
 		# test if negative values are okay
@@ -83,6 +83,30 @@ class TestMove(unittest.TestCase):
 		move.up    = -1
 		move.right = -1
 		self.assertFalse(move.isValid())
+
+	def test_left(self):
+		move = Move.left('a')
+		self.assertEquals(move.piece, 'a')
+		self.assertEquals(move.up, 0)
+		self.assertEquals(move.right, -1)
+
+	def test_right(self):
+		move = Move.right('a')
+		self.assertEquals(move.piece, 'a')
+		self.assertEquals(move.up, 0)
+		self.assertEquals(move.right, 1)
+
+	def test_up(self):
+		move = Move.up('a')
+		self.assertEquals(move.piece, 'a')
+		self.assertEquals(move.up, -1)
+		self.assertEquals(move.right, 0)
+
+	def test_down(self):
+		move = Move.down('a')
+		self.assertEquals(move.piece, 'a')
+		self.assertEquals(move.up, 1)
+		self.assertEquals(move.right, 0)
 
 if __name__ == '__main__':
 	unittest.main()

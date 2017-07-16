@@ -1,9 +1,12 @@
+from Piece import Piece
 from Move import Move
 
 class Map(object):
 
+	# default pieces in a map
 	wall   = "|"
 	goal   = "$"
+	empty  = "0"
 	player = "**"
 
 	def __init__(self, graph, delimeter='\n'):
@@ -30,6 +33,28 @@ class Map(object):
 		# array a member of the matrix
 		self.graph = [list(self.graph[i]) for i in range(len(self.graph))]
 
+	def setUpPieces(self):
+		"""
+		Find every piece available in the board and add it to an array
+		to keep track of them for future use.
+		"""
+		self.pieces = {}
+
+		for y in range(1, len(self.graph) - 1):
+			for x in range(1, len(self.graph[y]) - 1):
+				piece = self.graph[y][x]
+
+				# make sure that this is a piece worth noting
+				if piece != self.wall and piece != self.goal and \
+				   piece != self.empty and piece not in self.pieces:
+					# if there is a piece with the same kind to the right then
+					# this is a horizontal piece. No checks are done for bounds
+					# due to for loop structure
+					if self.graph[y][x + 1] == piece:
+						self.pieces[piece] = Piece(x, y, False)
+					elif self.graph[y + 1][x] == piece:
+						self.pieces[piece]  = Piece(x, y, True)
+
 	def setUp(self):
 		"""
 		Set up the Map class and set the graph by either getting a
@@ -53,6 +78,9 @@ class Map(object):
 		if not self.isValid():
 			# if the graph is not valid than raise an exception
 			raise SyntaxError("Graph created is not valid. Refer to sample maps provided.")
+
+		# get the pieces on the board to set up the 
+		self.setUpPieces()
 
 	def isWallOrGoal(self, point, num_goals_found):
 		"""
@@ -206,12 +234,14 @@ class Map(object):
 		return self.playerFound()
 
 	def isValidMove(self, move):
-		if type(move) != type(Move):
+		# check the type and if the type is valid check if the moved
+		# is also valid
+		if type(move) != type(Move) and not move.isValid():
 			return False
 
 		raise NotImplementedError("isValidMove not implemented")
 
-	def makeConfidentMove(self, move):
+	def makeConfidentMove(self, move):	
 		raise NotImplementedError("makeConfidentMove not implemented")
 
 	def makeMove(self, move):
@@ -226,8 +256,96 @@ class Map(object):
 		else:
 			raise SyntaxError("Invalid move given.")
 
-	def getMoves(self, move):
-		raise NotImplementedError("getMoves not implemented")
+	def additionMove(self, x, y, piece, isXMove):
+		"""
+		This will handle move verificatin for moving to the right or
+		down in the board. If it is possible it will pass the move.
+
+		@type x:        integer
+		@param x:       x coordinate for the piece
+		@type y:        integer
+		@param y:       y coordinate for the piece
+		@type piece:    character
+		@param piece:   the character representing the piece to be moved
+		@type isXMove:  boolean
+		@param isXMove: whether the move is affecting the x coordinate or not
+		"""
+		move = None
+		if isXMove:
+			x += 1
+			move = Move.right(piece)
+		else: 
+			y += 1
+			move = Move.down(piece)
+
+		# avoid walls
+		while x < len(self.graph[0]) - 1 and y < len(self.graph) - 1:
+			# if the point is not a piece 
+			if self.graph[y][x] != piece:
+				wallOrGoal, empty = self.isWallOrGoal(piece, 0)
+
+				# if the next space is empty
+				if self.graph[y][x] == self.empty and not wallOrGoal:
+					# add move
+					return move
+
+			# increment variable
+			if isXMove: x += 1
+			else:       y += 1
+
+		return None
+
+	def subtractionMove(self, x, y, piece, isXMove):
+		"""
+		This will handle move verificatin for moving to the left or
+		up in the board. If it is possible it will pass the move.
+
+		@type x:        integer
+		@param x:       x coordinate for the piece
+		@type y:        integer
+		@param y:       y coordinate for the piece
+		@type piece:    character
+		@param piece:   the character representing the piece to be moved
+		@type isXMove:  boolean
+		@param isXMove: whether the move is affecting the x coordinate or not
+		"""
+		move = None
+		if isXMove:
+			x -= 1
+			move = Move.left(piece)
+		else: 
+			y -= 1
+			move = Move.up(piece)
+
+		# avoid walls
+		if y >= 1 and x >= 1: 
+			wallOrGoal, empty = self.isWallOrGoal(piece, 0)
+
+			if self.graph[y][x] == self.empty and not wallOrGoal:
+				return move
+
+		return None
+
+	def getMoves(self):
+		"""
+		Get the moves available on the board.
+
+		@rtype:  [Move]
+		@return: Array of moves available
+		"""
+		moves = []
+		for piece in self.pieces:
+			vertical = self.pieces[piece].isVertical
+
+			# get moves that the piece can make
+			addMove = self.additionMove(self.pieces[piece].x,    self.pieces[piece].y, piece, not vertical)
+			subMove = self.subtractionMove(self.pieces[piece].x, self.pieces[piece].y, piece, not vertical) 
+
+			# add moves to list if they are valid
+			if addMove != None: moves.append(addMove)
+			if subMove != None: moves.append(subMove)
+
+		return moves
 
 	def isSolved(self):
 		raise NotImplementedError("isSolved not implemented")
