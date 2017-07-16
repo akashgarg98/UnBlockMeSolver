@@ -1,5 +1,6 @@
 from Piece import Piece
 from Move import Move
+import traceback
 
 class Map(object):
 
@@ -174,7 +175,7 @@ class Map(object):
 		@return:                if the middle rows are valid and the number
 		                        of goals currently found
 		"""
-		for i in range(0, len(self.graph) - 1):
+		for i in range(1, len(self.graph) - 1):
 			close_result, num_goals_found = self.isWallOrGoal(self.graph[i][0], num_goals_found)
 			far_result,   num_goals_found = self.isWallOrGoal(self.graph[i][len(self.graph[i]) - 1], num_goals_found)
 
@@ -239,7 +240,7 @@ class Map(object):
 		down in the board. If it is possible it will return True
 
 		@type move: Move
-		@param Move: MOve that is being checked
+		@param move: MOve that is being checked
 		"""
 		if move.up != 1 and move.right != 1:
 			return False
@@ -255,15 +256,15 @@ class Map(object):
 			y += 1
 
 		# avoid walls
-		while x < len(self.graph[0]) - 1 and y < len(self.graph) - 1:
+		while x < len(self.graph[0]) and y < len(self.graph):
 			# if the point is not a piece 
 			if self.graph[y][x] != move.piece:
-				wallOrGoal, empty = self.isWallOrGoal(move.piece, 0)
-
 				# if the next space is empty
-				if self.graph[y][x] == self.empty and not wallOrGoal:
+				if self.graph[y][x] == self.empty or self.graph[y][x] == self.goal:
 					# add move
 					return True
+
+				break
 
 			# increment variable
 			if move.up == 0: x += 1
@@ -277,7 +278,7 @@ class Map(object):
 		up in the board. If it is possible it will return True
 
 		@type move: Move
-		@param Move: MOve that is being checked
+		@param move: MOve that is being checked
 		"""
 		if move.up != -1 and move.right != -1:
 			return False
@@ -293,10 +294,8 @@ class Map(object):
 			y -= 1
 
 		# avoid walls when checking new x or y position
-		if y >= 1 and x >= 1: 
-			wallOrGoal, empty = self.isWallOrGoal(move.piece, 0)
-
-			if self.graph[y][x] == self.empty and not wallOrGoal:
+		if y >= 0 and x >= 0: 
+			if self.graph[y][x] == self.empty or self.graph[y][x] == self.goal:
 				return True
 
 		return None
@@ -304,7 +303,7 @@ class Map(object):
 	def isValidMove(self, move):
 		# check the type and if the type is valid check if the moved
 		# is also valid
-		if type(move) != type(Move) and not move.isValid():
+		if type(move) != Move or not move.isValid():
 			return False
 
 		return self.isValidAdditionMove(move) or self.isValidSubtractionMove(move)

@@ -197,6 +197,15 @@ class TestMap(unittest.TestCase):
 		self.assertFalse(result)
 		self.assertEquals(num_goals, 0)
 
+	def test_midRowsValid(self):
+		# test on invalid mid row
+		mr     = MapReader()
+		mr.load(files.bad_mid_row)
+		tester = Map(mr)
+
+		with self.assertRaises(SyntaxError):
+			tester.setUp()
+
 	def test_playerFound(self):
 		# test for example where player is in the map
 		tester            = Map(self.sample_string)
@@ -251,6 +260,33 @@ class TestMap(unittest.TestCase):
 		with self.assertRaises(SyntaxError):
 			tester.setUp()
 
+		# test fail on multiple goals
+		mr     = MapReader()
+		mr.load(files.multiple_goals)
+		tester = Map(mr)	
+		with self.assertRaises(SyntaxError):
+			tester.setUp()
+
+		# test fail on no goals
+		mr     = MapReader()
+		mr.load(files.no_goals)
+		tester = Map(mr)
+		with self.assertRaises(SyntaxError):
+			tester.setUp()
+
+		# test topBottomRowsValid invalid for isValid call
+		mr     = MapReader()
+		mr.load(files.bottom_row_bad)
+		tester = Map(mr)
+		with self.assertRaises(SyntaxError):
+			tester.setUp()
+
+		mr     = MapReader()
+		mr.load(files.top_row_bad)
+		tester = Map(mr)
+		with self.assertRaises(SyntaxError):
+			tester.setUp()
+
 	def validate_move(self, move1, move2):
 		self.assertEquals(move1.piece, move2.piece)
 		self.assertEquals(move1.up,    move2.up)
@@ -263,8 +299,54 @@ class TestMap(unittest.TestCase):
 		for i in range(len(moves1)):
 			self.validate_move(moves1[i], moves2[i])
 
+	def test_isValidSubtractionMove(self):
+		mr     = MapReader()
+		mr.load(files.good)
+		tester = Map(mr)
+		tester.setUp()
+
+		# test on none Move object
+		move = Move.right('*')
+		move.right = 3
+		self.assertFalse(tester.isValidSubtractionMove(move))
+
 	def test_isValidMove(self):
-		pass
+		mr     = MapReader()
+		mr.load(files.good)
+		tester = Map(mr)
+		tester.setUp()
+
+		# test on none Move object
+		self.assertFalse(tester.isValidMove("not move"))
+
+		# test when move isn't valid
+		move = Move.right(')')
+		move.up = 3
+		self.assertFalse(tester.isValidMove(move))
+
+		# test on invalid subtraction move
+		move = Move.left('*')
+		self.assertFalse(tester.isValidMove(move))
+
+		# test on invalid addition move
+		move = Move.left('a')
+		self.assertFalse(tester.isValidMove(move))
+
+		# test on valid addition move
+		move = Move.right('9')
+		self.assertTrue(tester.isValidMove(move))
+
+		# test on valid subtraction move
+		mr     = MapReader()
+		mr.load(files.left)
+		tester = Map(mr)
+		tester.setUp()
+		move   = Move.left('*')
+		self.assertTrue(tester.isValidMove(move))
+
+		# make sure we can move to the goal as well
+		move   = Move.right('*')
+		self.assertTrue(tester.isValidMove(move))
 
 	def test_makeConfidentMove(self):
 		pass
@@ -290,7 +372,7 @@ class TestMap(unittest.TestCase):
 		mr.load(files.left)
 		tester = Map(mr)
 		tester.setUp()
-		valid_moves = [Move.left('*')]
+		valid_moves = [Move.left('*'), Move.right('*')]
 		found_moves = tester.getMoves()
 		self.validate_moves(valid_moves, found_moves)
 
