@@ -10,7 +10,7 @@ html_coverage:
 document:
 	@echo "Generating documentation in doc folder."
 	@if [ -d doc ]; then rm -Rf doc; fi
-	@epydoc -v -o doc --pdf --name "Epydoc" .
+	@epydoc -v -o doc --pdf --name "Unblock Me Solver" .
 
 open_doc:
 	@open doc/api.pdf
@@ -26,7 +26,7 @@ help:
 	@echo "    tests"
 	@echo "        Run all unit tests."
 	@echo "    html_coverage"
-	@echo "        Open html documentation for the code coverage and run tests." 
+	@echo "        Run tests and open html documentation for code coverage." 
 	@echo "    document"
 	@echo "        Create new set of documentation."
 	@echo "    open_doc"
