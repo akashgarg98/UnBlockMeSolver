@@ -1,4 +1,4 @@
-from PathFinding import Heuristics
+from PathFinder import Heuristics
 import unittest
 import math
 

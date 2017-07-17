@@ -41,5 +41,3 @@ class TestReader(unittest.TestCase):
 		# check if string is valid
 		self.assertTrue(result == "sample_string")
 
-if __name__ == '__main__':
-	unittest.main()

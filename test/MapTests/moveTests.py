@@ -107,6 +107,3 @@ class TestMove(unittest.TestCase):
 		self.assertEquals(move.piece, 'a')
 		self.assertEquals(move.up, 1)
 		self.assertEquals(move.right, 0)
-
-if __name__ == '__main__':
-	unittest.main()

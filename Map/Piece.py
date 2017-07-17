@@ -42,3 +42,12 @@ class Piece(object):
 
 		self.x += move.right
 		self.y += move.up
+
+	def copy(self):
+		"""
+		Create a copy of self.
+
+		@rtype:  Piece
+		@return: Copy of this piece
+		"""
+		return Piece(self.x, self.y, self.isVertical)

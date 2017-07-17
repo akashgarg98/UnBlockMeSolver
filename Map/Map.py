@@ -1,14 +1,17 @@
+from copy import copy, deepcopy
 from Piece import Piece
 from Move import Move
 import traceback
 
+
 class Map(object):
 
 	# default pieces in a map
-	wall   = "|"
-	goal   = "$"
-	empty  = "0"
-	player = "**"
+	wall        = "|"
+	goal        = "$"
+	empty       = "0"
+	player      = "**"
+	playerPiece = "*"
 
 	def __init__(self, graph, delimeter='\n'):
 		"""
@@ -71,6 +74,9 @@ class Map(object):
 		# should be thrown here
 		if type(self.graph) != str:
 			raise TypeError("Incorrect type given to Map class (must be string or MapReader).")
+
+		# create unique hash for the board position
+		self.hash = self.graph
 
 		# convert the graph into a matrix that is reassignable
 		self.convertToMap()
@@ -260,7 +266,8 @@ class Map(object):
 			# if the point is not a piece 
 			if self.graph[y][x] != move.piece:
 				# if the next space is empty
-				if self.graph[y][x] == self.empty or self.graph[y][x] == self.goal:
+				if self.graph[y][x] == self.empty or \
+				   (move.piece == self.playerPiece and self.graph[y][x] == self.goal):
 					# add move
 					return True
 
@@ -295,7 +302,8 @@ class Map(object):
 
 		# avoid walls when checking new x or y position
 		if y >= 0 and x >= 0: 
-			if self.graph[y][x] == self.empty or self.graph[y][x] == self.goal:
+			if self.graph[y][x] == self.empty or \
+			   (move.piece == self.playerPiece and self.graph[y][x] == self.goal):
 				return True
 
 		return None
@@ -335,6 +343,9 @@ class Map(object):
 
 		# move piece in pieces dictionary
 		self.pieces[move.piece].move(move)
+
+		# update the hash
+		self.hash = self.delimeter.join([''.join(row) for row in self.graph])
 
 	def makeMove(self, move):
 		"""
@@ -386,6 +397,44 @@ class Map(object):
 				if self.graph[y][x] == self.goal:
 					return False
 		return True
+
+	def copy(self):
+		"""
+		Create a copy of this map and return it
+
+		@rtype:  Map
+		@return: Copy of this map
+		"""
+		# initialize copy
+		newMap = Map(None, delimeter=self.delimeter)
+
+		# set graph
+		newMap.graph  = deepcopy(self.graph)
+
+		# set pieces
+		newMap.pieces = {}
+
+		for key in self.pieces:
+			newMap.pieces[key] = self.pieces[key].copy()
+
+		# set hash
+		newMap.hash = self.hash
+
+		# return newly initialized copy
+		return newMap
+
+	def copyMove(self, move):
+		"""
+		Create a copy of the map and make a move on it; return the result.
+
+		@type move:  Move
+		@param move: move to be bade on copied board
+		@rtype:      Map
+		@return:     The new map with the move made on it
+		"""
+		copy = self.copy()
+		copy.makeMove(move)
+		return copy
 
 
 		

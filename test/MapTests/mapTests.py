@@ -482,5 +482,62 @@ class TestMap(unittest.TestCase):
 		tester.makeConfidentMove(Move.up('1'))
 		self.assertFalse(tester.isSolved())
 
-if __name__ == '__main__':
-    unittest.main()
+	def test_copy(self):
+		# get a valid graph set up
+		mr     = MapReader()
+		mr.load(files.quick_solve)
+		tester = Map(mr)
+		tester.setUp()
+		
+		# get a copy
+		copy = tester.copy()
+
+		# test if tester and copy references are different
+		self.assertNotEqual(copy, tester)
+
+		# test if the matrix references are different
+		self.assertFalse(copy.graph is tester.graph)
+
+		# test if the board elements are the same
+		for y in range(len(copy.graph)):
+			for x in range(len(copy.graph[y])):
+				self.assertEquals(copy.graph[y][x], tester.graph[y][x])
+
+		# test if hash is still the same
+		self.assertTrue(copy.hash, tester.hash)
+
+	def test_copyMove(self):
+		# get a right graph and move right on it
+		mr     = MapReader()
+		mr.load(files.right)
+		tester = Map(mr)
+		tester.setUp()
+		old_hash = tester.hash
+		copy = tester.copyMove(Move.right('*'))
+		
+		# get the graph that should result and test for equality
+		mr     = MapReader()
+		mr.load(files.left)
+		tester = Map(mr)
+		tester.setUp()
+
+		# test if tester and copy references are different
+		self.assertNotEqual(copy, tester)
+
+		# test if the matrix references are different
+		self.assertFalse(copy.graph is tester.graph)
+
+		# test if the board elements are the same
+		for y in range(len(copy.graph)):
+			for x in range(len(copy.graph[y])):
+				self.assertEquals(copy.graph[y][x], tester.graph[y][x])
+
+		# test if hash is same as the moved map
+		self.assertTrue(copy.hash, tester.hash)
+
+		# test if hash has been updated from the old one
+		self.assertNotEqual(copy.hash, old_hash)
+
+		# test if we move again to solve the puzzle
+		copy = copy.copyMove(Move.right('*'))
+		self.assertTrue(copy.isSolved())
