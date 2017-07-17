@@ -374,7 +374,18 @@ class Map(object):
 		return moves
 
 	def isSolved(self):
-		raise NotImplementedError("isSolved not implemented")
+		"""
+		If there is a goal found then the board is not solved. Complete checking
+		is done as there may be a goal in any location.
+
+		@rtype:  boolean
+		@return: if the game has been solved or not
+		"""
+		for y in range(len(self.graph)):
+			for x in range(len(self.graph[y])):
+				if self.graph[y][x] == self.goal:
+					return False
+		return True
 
 
 		

@@ -401,7 +401,7 @@ class TestMap(unittest.TestCase):
 		self.assertEquals(tester.graph, correct)
 
 	def test_makeMove(self):
-		# test invalid move type
+		# test valid move type
 		mr     = MapReader()
 		mr.load(files.left)
 		tester = Map(mr)
@@ -466,7 +466,21 @@ class TestMap(unittest.TestCase):
 		self.validate_moves(valid_moves, found_moves)
 
 	def test_isSolved(self):
-		pass
+		# test for solved example
+		mr     = MapReader()
+		mr.load(files.quick_solve)
+		tester = Map(mr)
+		tester.setUp()
+		tester.makeConfidentMove(Move.right('*'))
+		self.assertTrue(tester.isSolved())
+
+		# test for not solved example
+		mr     = MapReader()
+		mr.load(files.up)
+		tester = Map(mr)
+		tester.setUp()
+		tester.makeConfidentMove(Move.up('1'))
+		self.assertFalse(tester.isSolved())
 
 if __name__ == '__main__':
     unittest.main()
