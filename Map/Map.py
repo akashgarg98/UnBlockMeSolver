@@ -240,81 +240,127 @@ class Map(object):
 		# Check to make sure player is in the game and return the result
 		return self.playerFound()
 
-	def isValidAdditionMove(self, move):
+	def validAdditionMoves(self, move):
 		"""
 		This will handle move verificatin for moving to the right or
-		down in the board. If it is possible it will return True
+		down in the board. It will return an array of the the moves that
+		can be made in the direction given. 
 
-		@type move: Move
-		@param move: MOve that is being checked
+		@type move:  [Move]
+		@param move: Array of moves in the direction of the move given
 		"""
+		moves = []
+
 		if move.up != 1 and move.right != 1:
-			return False
+			return moves
 
 		# get piece information
 		x = self.pieces[move.piece].x
 		y = self.pieces[move.piece].y
 
-		# update x or y coordinate depending on the move
-		if move.up == 0:
-			x += 1
-		else: 
-			y += 1
-
-		# avoid walls
+		# find where the piece ends
 		while x < len(self.graph[0]) and y < len(self.graph):
-			# if the point is not a piece 
-			if self.graph[y][x] != move.piece:
-				# if the next space is empty
-				if self.graph[y][x] == self.empty or \
-				   (move.piece == self.playerPiece and self.graph[y][x] == self.goal):
-					# add move
-					return True
-
-				break
-
-			# increment variable
+			# increment variables
 			if move.up == 0: x += 1
 			else:            y += 1
 
-		return None
+			# if the point is not a piece 
+			if self.graph[y][x] != move.piece:
+				break
 
-	def isValidSubtractionMove(self, move):
+		# initialize counter variables for adding moves
+		right = 0
+		up    = 0
+
+		# update counters for upcoming moves
+		if move.up != 0: up    += 1
+		else:            right += 1
+
+		# run until border is met
+		while x < len(self.graph[0]) and y < len(self.graph):
+			# if the next space is empty
+			if self.graph[y][x] == self.empty or \
+			   (move.piece == self.playerPiece and self.graph[y][x] == self.goal):
+				# add move
+				moves.append(Move(move.piece, right, up))
+			else:
+				break
+
+			# update move counters and positions to check
+			if move.up != 0:
+				up    += 1
+				y     += 1
+			else:
+				right += 1
+				x     += 1
+
+		return moves
+
+	def validSubtractionMoves(self, move):
 		"""
 		This will handle move verificatin for moving to the left or
-		up in the board. If it is possible it will return True
+		up in the board. It will return an array of the the moves that
+		can be made in the direction given. 
 
-		@type move: Move
-		@param move: MOve that is being checked
+		@type move:  [Move]
+		@param move: Array of moves in the direction of the move given
 		"""
+		# list of moves that can be made
+		moves = []
+
 		if move.up != -1 and move.right != -1:
-			return False
+			return moves
 
 		# get piece information
 		x = self.pieces[move.piece].x
 		y = self.pieces[move.piece].y
 
-		# update x or y coordinate depending on the move
-		if move.up == 0:
-			x -= 1
-		else: 
-			y -= 1
+		# loop through until an invalid point has been found
+		valid = True
+		right = 0
+		up    = 0
 
-		# avoid walls when checking new x or y position
-		if y >= 0 and x >= 0: 
-			if self.graph[y][x] == self.empty or \
-			   (move.piece == self.playerPiece and self.graph[y][x] == self.goal):
-				return True
+		while valid == True:
+			# update x or y coordinate depending on the move
+			if move.up == 0:
+				x     -= 1
+				right -= 1
+			else: 
+				y     -= 1
+				up    -= 1
 
-		return None
+			# avoid walls when checking new x or y position
+			if y >= 0 and x >= 0: 
+				if self.graph[y][x] == self.empty:
+					# add move with the correct size
+					moves.append(Move(move.piece, right, up))
+				elif move.piece == self.playerPiece and self.graph[y][x] == self.goal:
+					moves.append(Move(move.piece, right, up))
+					valid = False
+				else: 
+					valid = False
+
+		return moves
 
 	def isValidMove(self, move):
+		"""
+		Check if the move given is valid or not to make the move.
+
+		@rtype:  boolean
+		@return: if the move is valid or not
+		"""
 		# check the type and if the type is valid check if the moved
 		# is also valid
 		if type(move) != Move or not move.isValid():
 			return False
 
-		return self.isValidAdditionMove(move) or self.isValidSubtractionMove(move)
+		# check if move is apart of found moves
+		for validMove in self.getMoves():
+			if move.equals(validMove):
+				return True
+
+		return False
+
 
 	def makeConfidentMove(self, move):
 		"""
@@ -328,18 +374,27 @@ class Map(object):
 		y = self.pieces[move.piece].y
 
 		# find the point the furthest over and put in a new piece
-		while self.graph[y][x] == move.piece:
-			x += move.right
-			y += move.up
+		num_iterations = max(abs(move.right), abs(move.up))
+		for i in range(num_iterations):
+			while self.graph[y][x] == move.piece:
+				# this function will return 1 or -1 for the sign of the number. 
+				# If it is 0, then it will return 0
+				x += cmp(move.right,0)
+				y += cmp(move.up,0)
 
-		self.graph[y][x] = move.piece
+			self.graph[y][x] = move.piece
 
 		# trace back and put in an empty piece in the last avaialble piece
 		while self.graph[y][x] == move.piece:
-			x -= move.right
-			y -= move.up
+			x -= cmp(move.right,0)
+			y -= cmp(move.up,0)
 
-		self.graph[y + move.up][x + move.right] = self.empty
+		for i in range(num_iterations):
+			self.graph[y + move.up][x + move.right] = self.empty
+
+			x -= cmp(move.right,0)
+			y -= cmp(move.up,0)
+
 
 		# move piece in pieces dictionary
 		self.pieces[move.piece].move(move)
@@ -373,14 +428,14 @@ class Map(object):
 				up   = Move.up(piece)
 				down = Move.down(piece)
 
-				if self.isValidSubtractionMove(up): moves.append(up)
-				if self.isValidAdditionMove(down):  moves.append(down)
+				for ele in self.validSubtractionMoves(up): moves.append(ele)
+				for ele in self.validAdditionMoves(down):  moves.append(ele)
 			else:
 				left  = Move.left(piece)
 				right = Move.right(piece)
 
-				if self.isValidSubtractionMove(left): moves.append(left)
-				if self.isValidAdditionMove(right):   moves.append(right)
+				for ele in self.validSubtractionMoves(left): moves.append(ele)
+				for ele in self.validAdditionMoves(right):   moves.append(ele)
 
 		return moves
 
@@ -396,6 +451,7 @@ class Map(object):
 			for x in range(len(self.graph[y])):
 				if self.graph[y][x] == self.goal:
 					return False
+
 		return True
 
 	def copy(self):
@@ -434,6 +490,20 @@ class Map(object):
 		"""
 		copy = self.copy()
 		copy.makeMove(move)
+		return copy
+
+	def copyConfidentMove(self, move):
+		"""
+		Create a copy of the map and make a move on it without checking for its
+		validity. Return the result.
+
+		@type move:  Move
+		@param move: move to be bade on copied board
+		@rtype:      Map
+		@return:     The new map with the move made on it
+		"""
+		copy = self.copy()
+		copy.makeConfidentMove(move)
 		return copy
 
 

@@ -27,48 +27,68 @@ class Move(object):
 		# first check if the type of piece is a character and the
 		# direction of the move is horizontal or vertical and not
 		# diagnol
-		return type(self.piece) == str              and \
-		       ((self.up ==  1 and self.right ==  0) or \
-		       	(self.up == -1 and self.right ==  0) or \
-                (self.up ==  0 and self.right ==  1) or \
-                (self.up ==  0 and self.right == -1))
+		return type(self.piece) == str             and \
+		       ((self.up != 0 and self.right == 0)  or \
+		       	(self.up != 0 and self.right == 0)  or \
+		        (self.up == 0 and self.right != 0)  or \
+		        (self.up == 0 and self.right != 0))
+
+	def equals(self, move):
+		"""
+		Test whether the two moves are equal.
+
+		@type move:  Move
+		@param move: Move being tested for equality
+		@rtype:      boolean
+		@return:     Whether the two moves are equal
+		"""
+		return self.piece == move.piece and self.right == move.right and self.up == move.up
+
+	def toStr(self):
+		"""
+		Convert self to string.
+
+		@rtype:  str
+		@return: String representation of the move
+		"""
+		return str(self.piece + ", " + str(self.right) + ", " + str(self.up))
 
 	@staticmethod
-	def left(piece):
+	def left(piece, size=1):
 		"""
 		Instantiate a move that will go left
 
 		@type piece:  character
 		@param piece: Character that represents the piece to be moved
 		"""
-		return Move(piece, -1, 0)
+		return Move(piece, -abs(size), 0)
 
 	@staticmethod
-	def right(piece):
+	def right(piece, size=1):
 		"""
 		Instantiate a move that will go right
 
 		@type piece:  character
 		@param piece: Character that represents the piece to be moved
 		"""
-		return Move(piece, 1, 0)
+		return Move(piece, abs(size), 0)
 
 	@staticmethod
-	def up(piece):
+	def up(piece, size=1):
 		"""
 		Instantiate a move that will go up
 
 		@type piece:  character
 		@param piece: Character that represents the piece to be moved
 		"""
-		return Move(piece, 0, -1)
+		return Move(piece, 0, -abs(size))
 
 	@staticmethod
-	def down(piece):
+	def down(piece, size=1):
 		"""
 		Instantiate a move that will go down
 
 		@type piece:  character
 		@param piece: Character that represents the piece to be moved
 		"""
-		return Move(piece, 0, 1)
+		return Move(piece, 0, abs(size))

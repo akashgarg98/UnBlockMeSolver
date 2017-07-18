@@ -39,7 +39,7 @@ class PathFindingTest(unittest.TestCase):
 		path = bfs.getPath()
 		self.solve(tester, path)
 		self.assertTrue(tester.isSolved())
-		self.assertEquals(len(path), 2)
+		self.assertEquals(len(path), 1)
 
 		# test simple solve with a few moves
 		mr     = MapReader()
@@ -50,7 +50,7 @@ class PathFindingTest(unittest.TestCase):
 		path = bfs.getPath()
 		self.solve(tester, path)
 		self.assertTrue(tester.isSolved())
-		self.assertEquals(len(path), 6)
+		self.assertEquals(len(path), 3)
 
 		# test complex map
 		mr     = MapReader()
@@ -61,7 +61,7 @@ class PathFindingTest(unittest.TestCase):
 		path = bfs.getPath()
 		self.solve(tester, path)
 		self.assertTrue(tester.isSolved())
-		self.assertEquals(len(path), 29)
+		self.assertEquals(len(path), 15)
 
 		# test handing a solved map to bfs
 		bfs  = BFS(tester)

@@ -299,17 +299,6 @@ class TestMap(unittest.TestCase):
 		for i in range(len(moves1)):
 			self.validate_move(moves1[i], moves2[i])
 
-	def test_isValidSubtractionMove(self):
-		mr     = MapReader()
-		mr.load(files.good)
-		tester = Map(mr)
-		tester.setUp()
-
-		# test on none Move object
-		move = Move.right('*')
-		move.right = 3
-		self.assertFalse(tester.isValidSubtractionMove(move))
-
 	def test_isValidMove(self):
 		mr     = MapReader()
 		mr.load(files.good)
@@ -325,7 +314,7 @@ class TestMap(unittest.TestCase):
 		self.assertFalse(tester.isValidMove(move))
 
 		# test on invalid subtraction move
-		move = Move.left('*')
+		move = Move.left('*', size=2)
 		self.assertFalse(tester.isValidMove(move))
 
 		# test on invalid addition move
@@ -355,9 +344,9 @@ class TestMap(unittest.TestCase):
 		tester = Map(mr)
 		tester.setUp()
 		tester.makeConfidentMove(Move.left('*'))
-		correct = [['|', '|', '|', '|', '|'], \
-		           ['|', '*', '*', '0', '$'], \
-		           ['|', '|', '|', '|', '|']]
+		correct = [['|', '|','|', '|', '|', '|'], \
+		           ['|', '0','*', '*', '0', '$'], \
+		           ['|', '|','|', '|', '|', '|']]
 		self.assertEquals(tester.graph, correct)
 
 		# test moving right
@@ -383,6 +372,7 @@ class TestMap(unittest.TestCase):
 		           ['|', '1', '0', '0', '|'], \
 		           ['|', '1', '0', '0', '|'], \
 		           ['|', '1', '0', '0', '|'], \
+		           ['|', '0', '0', '0', '|'], \
 		           ['|', '|', '|', '|', '|']]
 		self.assertEquals(tester.graph, correct)
 
@@ -411,8 +401,27 @@ class TestMap(unittest.TestCase):
 
 		# test valid move type
 		tester.makeMove(Move.left('*'))
+		correct = [['|', '|','|', '|', '|', '|'], \
+		           ['|', '0','*', '*', '0', '$'], \
+		           ['|', '|','|', '|', '|', '|']]
+		self.assertEquals(tester.graph, correct)
+
+		# test multi-move valid move type
+		mr     = MapReader()
+		mr.load(files.right)
+		tester = Map(mr)
+		tester.setUp()
+		with self.assertRaises(SyntaxError):
+			tester.makeMove(None)
+
+		# test moving right twice
+		mr     = MapReader()
+		mr.load(files.right)
+		tester = Map(mr)
+		tester.setUp()
+		tester.makeMove(Move.right('*',size=2))
 		correct = [['|', '|', '|', '|', '|'], \
-		           ['|', '*', '*', '0', '$'], \
+		           ['|', '0', '0', '*', '*'], \
 		           ['|', '|', '|', '|', '|']]
 		self.assertEquals(tester.graph, correct)
 
@@ -425,7 +434,7 @@ class TestMap(unittest.TestCase):
 		mr.load(files.right)
 		tester = Map(mr)
 		tester.setUp()
-		valid_moves = [Move.right('*')]
+		valid_moves = [Move.right('*'), Move.right('*', size=2)]
 		found_moves = tester.getMoves()
 		self.validate_moves(valid_moves, found_moves)
 
@@ -434,7 +443,7 @@ class TestMap(unittest.TestCase):
 		mr.load(files.left)
 		tester = Map(mr)
 		tester.setUp()
-		valid_moves = [Move.left('*'), Move.right('*')]
+		valid_moves = [Move.left('*', size=1), Move.left('*', size=2), Move.right('*')]
 		found_moves = tester.getMoves()
 		self.validate_moves(valid_moves, found_moves)
 
@@ -443,7 +452,7 @@ class TestMap(unittest.TestCase):
 		mr.load(files.up)
 		tester = Map(mr)
 		tester.setUp()
-		valid_moves = [Move.up('1'), Move.right('*')]
+		valid_moves = [Move.up('1'), Move.right('*'), Move.right('*', size=2)]
 		found_moves = tester.getMoves()
 		self.validate_moves(valid_moves, found_moves)
 
@@ -452,7 +461,7 @@ class TestMap(unittest.TestCase):
 		mr.load(files.down)
 		tester = Map(mr)
 		tester.setUp()
-		valid_moves = [Move.down('1'), Move.right('*')]
+		valid_moves = [Move.down('1'), Move.down('1', size=2), Move.right('*'),  Move.right('*', size=2)]
 		found_moves = tester.getMoves()
 		self.validate_moves(valid_moves, found_moves)
 
@@ -462,6 +471,15 @@ class TestMap(unittest.TestCase):
 		tester = Map(mr)
 		tester.setUp()
 		valid_moves = []
+		found_moves = tester.getMoves()
+		self.validate_moves(valid_moves, found_moves)
+
+		# test when the goal is on the left side
+		mr     = MapReader()
+		mr.load(files.left_goal)
+		tester = Map(mr)
+		tester.setUp()
+		valid_moves = [Move.left('*', size=1), Move.left('*', size=2), Move.left('*', size=3)]
 		found_moves = tester.getMoves()
 		self.validate_moves(valid_moves, found_moves)
 
@@ -528,9 +546,8 @@ class TestMap(unittest.TestCase):
 		self.assertFalse(copy.graph is tester.graph)
 
 		# test if the board elements are the same
-		for y in range(len(copy.graph)):
-			for x in range(len(copy.graph[y])):
-				self.assertEquals(copy.graph[y][x], tester.graph[y][x])
+		good_map = "|||||\n|0**$\n|||||"
+		self.assertEquals(copy.hash, good_map)
 
 		# test if hash is same as the moved map
 		self.assertTrue(copy.hash, tester.hash)
@@ -541,3 +558,34 @@ class TestMap(unittest.TestCase):
 		# test if we move again to solve the puzzle
 		copy = copy.copyMove(Move.right('*'))
 		self.assertTrue(copy.isSolved())
+
+	def test_copyConfidentMove(self):
+		# get a right graph and move right on it
+		mr     = MapReader()
+		mr.load(files.right)
+		tester = Map(mr)
+		tester.setUp()
+		old_hash = tester.hash
+		copy = tester.copyConfidentMove(Move.right('*'))
+		good_map = "|||||\n|0**$\n|||||"
+		self.assertEquals(copy.hash, good_map)
+
+	def test_validSubractionMoves(self):
+		# get a right graph and move right on it
+		mr     = MapReader()
+		mr.load(files.right)
+		tester = Map(mr)
+		tester.setUp()
+		self.assertEquals(len(tester.validSubtractionMoves(Move.right('*'))), 0)
+		self.assertEquals(len(tester.validSubtractionMoves(Move.up('*'))), 0)
+
+	def test_validAdditionMoves(self):
+		# get a right graph and move right on it
+		mr     = MapReader()
+		mr.load(files.right)
+		tester = Map(mr)
+		tester.setUp()
+		self.assertEquals(len(tester.validAdditionMoves(Move.left('*'))), 0)
+		self.assertEquals(len(tester.validAdditionMoves(Move.down('*'))), 0)
+
+

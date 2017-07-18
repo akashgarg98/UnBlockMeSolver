@@ -29,9 +29,7 @@ class BFS(PathFinder):
 
 		while not queue.empty():
 			move, node = queue.get()
-			newBoard = node.graph.copyMove(move)
-			# print newBoard.hash
-			# print "-------"
+			newBoard = node.graph.copyMove(move) # make a confident move once the bug is discovered
 
 			if newBoard.hash not in discovered:
 				if newBoard.isSolved():
