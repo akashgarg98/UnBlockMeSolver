@@ -14,7 +14,7 @@ class Piece(object):
 		"""
 		super(Piece, self).__init__()
 
-		if type(x) != int or type(y) != int or type(vertical) != bool:
+		if type(x) != int or type(y) != int or (vertical != None and type(vertical) != bool):
 			raise AttributeError("Incorrect types given for class Piece")
 
 		self.x          = x

@@ -7,13 +7,10 @@ class BFS(PathFinder):
 
 	def populateQueue(self, graph, move, queue, parent):
 		# get possible moves
-		moves       = graph.getMoves()
+		moves = graph.getMoves()
 
 		# create node
-		node        = Node()
-		node.graph  = graph
-		node.parent = parent
-		node.move   = move
+		node  = Node(graph, move, parent)
 
 		# put into queue all the moves possible
 		for move in moves:
@@ -29,7 +26,7 @@ class BFS(PathFinder):
 
 		while not queue.empty():
 			move, node = queue.get()
-			newBoard = node.graph.copyMove(move) # make a confident move once the bug is discovered
+			newBoard = node.graph.copyConfidentMove(move)
 
 			if newBoard.hash not in discovered:
 				if newBoard.isSolved():

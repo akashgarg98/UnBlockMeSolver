@@ -1,7 +1,20 @@
 class Node(object):
-	parent = None
-	move   = None
-	graph  = None
+
+	def __init__(self, graph, move, parent):
+		"""
+		Initialize AStarNode class
+
+		@type graph:   Map
+		@param graph:  Map that moves can be made on 
+		@type move:    Move
+		@param move:   Move that resulted in the above graph
+		@type parent:  Node
+		@param parent: Parent node of this. Contains previous moves to get
+		               the current board.
+		"""
+		self.graph  = graph
+		self.move   = move
+		self.parent = parent
 
 	def reconstructPath(self):
 		"""
@@ -16,12 +29,10 @@ class Node(object):
 
 		# loop through parents
 		while parent != None:
-			# add move to list and then change parent to next one
 			if parent.move != None:
 				path.append(parent.move)
 				
 			parent = parent.parent
 
 		# reverse list and return result. Remove the first as it will be None
-		return list(reversed(path[1:]))
-		
+		return list(reversed(path[1:]))		

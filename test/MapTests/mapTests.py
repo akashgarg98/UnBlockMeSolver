@@ -37,13 +37,19 @@ class TestMap(unittest.TestCase):
 		tester.setUp() # this function calls the desired function to be tested
 
 		# make sure only one valid piece is found
-		self.assertEquals(len(tester.pieces), 1)
+		self.assertEquals(len(tester.pieces), 2)
 
 		# make sure the piece found is coherent to the expected values
-		valid_pieces = Piece(1,1,False)
-		self.assertEquals(tester.pieces['*'].x,          valid_pieces.x)
-		self.assertEquals(tester.pieces['*'].y,          valid_pieces.y)
-		self.assertEquals(tester.pieces['*'].isVertical, valid_pieces.isVertical)
+		valid_piece = Piece(1,1,False)
+		self.assertEquals(tester.pieces['*'].x,          valid_piece.x)
+		self.assertEquals(tester.pieces['*'].y,          valid_piece.y)
+		self.assertEquals(tester.pieces['*'].isVertical, valid_piece.isVertical)
+
+		# test if the goal piece is found
+		valid_piece = Piece(4,1,None)
+		self.assertEquals(tester.pieces['$'].x,          valid_piece.x)
+		self.assertEquals(tester.pieces['$'].y,          valid_piece.y)
+		self.assertEquals(tester.pieces['$'].isVertical, valid_piece.isVertical)
 
 	def test_init(self):
 		## test if string and default delimeter works
@@ -70,14 +76,14 @@ class TestMap(unittest.TestCase):
 
 	def test_setUp(self):
 		# initalizing class to test function on
-		tester   = Map(self.sample_string)
+		tester = Map(self.sample_string)
 
 		# assume no exception is raised and everything is fine
 		tester.setUp()
 
 		# create tester with fake object which should throw a 
 		# type error
-		tester   = Map(FakeMapReader())
+		tester = Map(FakeMapReader())
 		with self.assertRaises(TypeError):
 			tester.setUp()
 

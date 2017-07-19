@@ -8,15 +8,9 @@ import unittest
 class NodeTest(unittest.TestCase):
 
 	def test_reconstructPath(self):
-		r1        = Node()
-		r1.move   = 1
-		r1.parent = None
-		r2        = Node()
-		r2.move   = 2
-		r2.parent = r1
-		r3        = Node()
-		r3.move   = 3
-		r3.parent = r2
+		r1        = Node(None, 1, None)
+		r2        = Node(None, 2, r1)
+		r3        = Node(None, 3, r2)
 
 		self.assertEquals([1,2,3], r3.reconstructPath())
 

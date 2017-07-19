@@ -42,19 +42,20 @@ class Map(object):
 		Find every piece available in the board and add it to an array
 		to keep track of them for future use.
 		"""
-		self.pieces = {}
-
-		for y in range(1, len(self.graph) - 1):
-			for x in range(1, len(self.graph[y]) - 1):
+		# dictionary to hold the pieces in the map that can be moved
+		self.pieces      = {}
+		for y in range(len(self.graph)):
+			for x in range(len(self.graph[y])):
 				piece = self.graph[y][x]
 
 				# make sure that this is a piece worth noting
-				if piece != self.wall and piece != self.goal and \
-				   piece != self.empty and piece not in self.pieces:
+				if piece != self.wall and piece != self.empty and piece not in self.pieces:
 					# if there is a piece with the same kind to the right then
 					# this is a horizontal piece. No checks are done for bounds
 					# due to for loop structure
-					if self.graph[y][x + 1] == piece:
+					if self.graph[y][x] == self.goal:
+						self.pieces[piece] = Piece(x, y, None)
+					elif self.graph[y][x + 1] == piece:
 						self.pieces[piece] = Piece(x, y, False)
 					elif self.graph[y + 1][x] == piece:
 						self.pieces[piece]  = Piece(x, y, True)
@@ -94,7 +95,6 @@ class Map(object):
 		This will check if the point is a wall or goal and if not return 
 		False. Additionally, it will update the number of goals that 
 		have been found. 
-
 		@type point:  character
 		@param point: the point being checked in the graph. 
 		@type num_goals_found:  integer
@@ -424,6 +424,9 @@ class Map(object):
 		moves = []
 
 		for piece in self.pieces:
+			if piece == self.goal:
+				continue
+
 			if self.pieces[piece].isVertical:
 				up   = Move.up(piece)
 				down = Move.down(piece)
