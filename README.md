@@ -8,9 +8,9 @@ This repository aims to create a solver for puzzles found in applications like `
 
 ** Please note this repository is a work in progress and documentation and code will be updated in the near future **
 
-## TO Fix
+## A*
 
-moves should actually allow for multiple spaces to be taken rather than just one.
+A* is implemented and tested, however, the given heuristic, [manhattan distance](https://en.wikipedia.org/wiki/Taxicab_geometry), is an inadmissable heuristic and fails; this results in an inoptimal path. The distance metric would serve as an admissable heuristic if the game allowed for only single-step moves instead of multi-step moves. 
 
 ## To Delete
 

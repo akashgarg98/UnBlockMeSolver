@@ -6,14 +6,29 @@ from Heuristics import *
 class AStar(PathFinder):
 
 	def heuristic(self, board):
-		# TODO: document
+		"""
+		Calculate heuristic cost for the given board.
+
+		@type board:  Map
+		@param board: Board being analyzed
+		@rtype:       number
+		@return:      Heuristic cost
+		"""
 		# position of player has to be adjusted based on where the player is
-		return manhattan(board.pieces[board.playerPiece].x + len(board.player), board.pieces[board.playerPiece].y, \
+		return manhattan(board.pieces[board.playerPiece].x, board.pieces[board.playerPiece].y, \
 			             board.pieces[board.goal].x, board.pieces[board.goal].y)
 
 	def populateQueue(self, graph, queue, parent):
-		# TODO: document
+		"""
+		Populate the priority queue with nodes and their cost.
 
+		@type graph:   Map
+		@param graph:  Graph to get moves from to populate queue
+		@type queue:   Queue
+		@param queue:  Queue with nodes being added to it with the cost
+		@type parent:  AStarNode
+		@param parent: Parent for the nodes that will be created
+		"""
 		# get possible moves
 		moves = graph.getMoves()
 
@@ -32,7 +47,12 @@ class AStar(PathFinder):
 			queue.put((node.cost(), node))
 
 	def getPath(self):
-		# TODO: document
+		"""
+		Get the best path to solve the given graph.
+
+		@rtype:  [Move]
+		@return: Array of moves which represent the path found to solve the puzzle
+		"""
 		# make sure the board isn't already solved
 		if self.board.isSolved():
 			return None
