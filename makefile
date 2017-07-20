@@ -3,17 +3,21 @@ tests:
 	@coverage report
 
 html_coverage:
+	@if [ ! -d docs ]; then mkdir docs; fi
 	@make tests
+	@if [ -d docs/htmlcov ]; then rm -Rf docs/htmlcov; fi
 	@coverage html
-	@open htmlcov/index.html
+	@mv htmlcov docs/
+	@open docs/htmlcov/index.html
 
 document:
-	@echo "Generating documentation in doc folder."
-	@if [ -d doc ]; then rm -Rf doc; fi
-	@epydoc -v -o doc --pdf --name "Unblock Me Solver" .
+	@echo "Generating documentation in docs/documentation folder."
+	@if [ ! -d docs ]; then mkdir docs; fi
+	@if [ -d docs/documentation ]; then rm -Rf docs/documentation; fi
+	@epydoc -v -o docs/documentation --pdf --name "Unblock Me Solver" .
 
 open_doc:
-	@open doc/api.pdf
+	@open docs/documentation/api.pdf
 
 clean:
 	$(shell find . -name "*.pyc" -exec rm -f {} \;)
