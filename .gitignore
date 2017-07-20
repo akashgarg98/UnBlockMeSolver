@@ -100,8 +100,5 @@ ENV/
 # mypy
 .mypy_cache/
 
-# ignore generated documentation
-#doc/
-
-# ignore generated html code coverage data
-#htmlcov/
+# ignore generated documentation and ignore generated html code coverage data
+docs/
