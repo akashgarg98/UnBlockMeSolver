@@ -22,9 +22,6 @@ open_doc:
 clean:
 	$(shell find . -name "*.pyc" -exec rm -f {} \;)
 	@echo "*.pyc files deleted."
-
-lines:
-	@find . -name '*.py' | xargs wc -l
 	
 help:
 	@echo "    tests"

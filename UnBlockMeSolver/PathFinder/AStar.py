@@ -1,22 +1,8 @@
 from PathFinder import PathFinder
 from Queue import PriorityQueue
 from AStarNode import AStarNode
-from Heuristics import *
 
 class AStar(PathFinder):
-
-	def heuristic(self, board):
-		"""
-		Calculate heuristic cost for the given board.
-
-		@type board:  Map
-		@param board: Board being analyzed
-		@rtype:       number
-		@return:      Heuristic cost
-		"""
-		# position of player has to be adjusted based on where the player is
-		return manhattan(board.pieces[board.playerPiece].x, board.pieces[board.playerPiece].y, \
-			             board.pieces[board.goal].x, board.pieces[board.goal].y)
 
 	def populateQueue(self, graph, queue, parent):
 		"""
@@ -46,7 +32,7 @@ class AStar(PathFinder):
 			# put the node in priority queue
 			queue.put((node.cost(), node))
 
-	def getPath(self):
+	def getPath(self, heuristic):
 		"""
 		Get the best path to solve the given graph.
 
@@ -56,6 +42,11 @@ class AStar(PathFinder):
 		# make sure the board isn't already solved
 		if self.board.isSolved():
 			return None
+
+		# make sure the given heuristic is a function that can be called
+		if not callable(heuristic):
+			return None
+		self.heuristic = heuristic
 
 		# initialize data structures for A*
 		queue    = PriorityQueue()
