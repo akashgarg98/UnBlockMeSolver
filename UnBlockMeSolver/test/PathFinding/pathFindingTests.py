@@ -1,9 +1,8 @@
 from PathFinder.PathFinder import PathFinder
+from PathFinder.TreeSearch import TreeSearch
 from Map.MapReader import MapReader
 from PathFinder.Heuristics import *
 from PathFinder.AStar import AStar
-from PathFinder.bfs import BFS
-from PathFinder.dfs import DFS
 from Map.Move import Move
 from Map.Map import Map
 from test import files
@@ -11,13 +10,18 @@ import unittest
 import time
 
 
-def testPaths(self, solver, checkLength=True):
+def testPaths(self, solver, isBFS=False, checkLength=True):
 	# test simple solve with one move
 	mr     = MapReader()
 	mr.load(files.quick_solve)
 	tester = Map(mr)
-	tester.setUp()
-	pf = solver(tester)
+	pf = None 
+
+	# set path finder (BFS and DFS have different initializations)
+	if solver == AStar:
+		pf = solver(tester)
+	else:
+		pf = solver(tester, bfs=isBFS)
 	
 	path = None
 	if solver == AStar:
@@ -36,8 +40,7 @@ def testPaths(self, solver, checkLength=True):
 	mr     = MapReader()
 	mr.load(files.right)
 	tester = Map(mr)
-	tester.setUp()
-	pf = solver(tester)
+	pf.board = tester
 	
 	path = None
 	if solver == AStar:
@@ -54,8 +57,7 @@ def testPaths(self, solver, checkLength=True):
 	mr     = MapReader()
 	mr.load(files.easy_solve)
 	tester = Map(mr)
-	tester.setUp()
-	pf = solver(tester)
+	pf.board = tester
 	
 	path = None
 	if solver == AStar:
@@ -73,8 +75,7 @@ def testPaths(self, solver, checkLength=True):
 	mr     = MapReader()
 	mr.load(files.simple_solve)
 	tester = Map(mr)
-	tester.setUp()
-	pf  = solver(tester)
+	pf.board = tester
 	
 	path = None
 	if solver == AStar:
@@ -91,10 +92,10 @@ def testPaths(self, solver, checkLength=True):
 
 	end = time.clock()
 	print
-	print solver, "time:", end - start
+	print solver, "time ", isBFS, ":", end - start
 
 	# test handing a solved map to pathfinder
-	pf  = solver(tester)
+	pf.board = tester
 
 	path = None
 	if solver == AStar:
@@ -106,8 +107,7 @@ def testPaths(self, solver, checkLength=True):
 	mr     = MapReader()
 	mr.load(files.impossible)
 	tester = Map(mr)
-	tester.setUp()
-	pf = solver(tester)
+	pf.board = tester
 	
 	path = None
 	if solver == AStar:
@@ -130,10 +130,10 @@ class PathFindingTest(unittest.TestCase):
 			pf.getPath()
 	
 	def test_dfs(self):
-		testPaths(self, DFS, checkLength=False)
+		testPaths(self, TreeSearch, isBFS=False, checkLength=False)
 
 	def test_bfs(self):
-		testPaths(self, BFS)
+		testPaths(self, TreeSearch, isBFS=True)
 
 	def heuristic(self, board):
 		"""
@@ -155,7 +155,6 @@ class PathFindingTest(unittest.TestCase):
 		mr     = MapReader()
 		mr.load(files.quick_solve)
 		tester = Map(mr)
-		tester.setUp()
 		pf = AStar(tester)
 
 		path = pf.getPath(None)

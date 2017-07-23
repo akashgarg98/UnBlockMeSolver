@@ -1,9 +1,25 @@
 from PathFinder import PathFinder
+from Utility.Stack import Stack
 from Queue import Queue
 from test import files
 from Node import Node
 
-class BFS(PathFinder):
+class TreeSearch(PathFinder):
+
+	def __init__(self, board, bfs=True):
+		"""
+		Initialize TreeSearch class.
+
+		@type board:  Map
+		@param board: Map to be solved
+		@type bfs:    boolean
+		@param bfs:   Whether this class will use breadth-first search or
+		              depth-first search
+		@rtype:       TreeSearch
+		@return:      Initialized TreeSearch class
+		"""
+		super(TreeSearch, self).__init__(board)
+		self.bfs = bfs
 
 	def populateQueue(self, graph, move, queue, parent):
 		"""
@@ -39,7 +55,14 @@ class BFS(PathFinder):
 		if self.board.isSolved():
 			return None
 
-		queue = Queue()
+		# decide on the data structure to use which determines if breadth-first search
+		# or depth-first search is being run. 
+		queue = None
+		if self.bfs == True:
+			queue = Queue()
+		else:
+			queue = Stack()
+
 		self.populateQueue(self.board, None, queue, None)
 		discovered = {self.board.hash: True}
 

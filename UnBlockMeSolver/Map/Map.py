@@ -13,7 +13,7 @@ class Map(object):
 	player      = "**"
 	playerPiece = "*"
 
-	def __init__(self, graph, delimeter='\n'):
+	def __init__(self, graph, delimeter='\n', setUp=True):
 		"""
 		Initialize the class by setting the graph and delimeters variables.
 
@@ -25,6 +25,9 @@ class Map(object):
 		super(Map, self).__init__()
 		self.graph     = graph
 		self.delimeter = delimeter
+
+		if setUp == True:
+			self.setUp()
 
 	def convertToMap(self):
 		"""
@@ -465,7 +468,7 @@ class Map(object):
 		@return: Copy of this map
 		"""
 		# initialize copy
-		newMap = Map(None, delimeter=self.delimeter)
+		newMap = Map(None, setUp=False, delimeter=self.delimeter)
 
 		# set graph
 		newMap.graph  = deepcopy(self.graph)

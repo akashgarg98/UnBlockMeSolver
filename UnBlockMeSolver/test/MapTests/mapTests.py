@@ -34,7 +34,6 @@ class TestMap(unittest.TestCase):
 		mr     = MapReader()
 		mr.load(files.right)
 		tester = Map(mr)
-		tester.setUp() # this function calls the desired function to be tested
 
 		# make sure only one valid piece is found
 		self.assertEquals(len(tester.pieces), 2)
@@ -53,20 +52,20 @@ class TestMap(unittest.TestCase):
 
 	def test_init(self):
 		## test if string and default delimeter works
-		t1 = Map(self.sample_string)
+		t1 = Map(self.sample_string, setUp=False)
 
 		self.assertEquals(t1.delimeter, self.default_delimeter)
 		self.assertEquals(t1.graph, self.sample_string)
 
 		## test changing the delimeter
-		t1 = Map(self.sample_string, delimeter=self.new_delimeter)
+		t1 = Map(self.sample_string, setUp=False, delimeter=self.new_delimeter)
 
 		self.assertEquals(t1.delimeter, self.new_delimeter)
 		self.assertEquals(t1.graph, self.sample_string)
 
 	def test_convertToMap(self):
 		# initalizing class to test function on
-		tester   = Map(self.sample_string)
+		tester   = Map(self.sample_string, setUp=False)
 		tester.convertToMap()
 		str_list = self.sample_string.split('\n') 
 
@@ -75,36 +74,32 @@ class TestMap(unittest.TestCase):
 			self.assertEquals(tester.graph[i], list(str_list[i]))
 
 	def test_setUp(self):
-		# initalizing class to test function on
+		# initalizing class to test function on and assume no exception 
+		# is raised and everything is fine
 		tester = Map(self.sample_string)
-
-		# assume no exception is raised and everything is fine
-		tester.setUp()
 
 		# create tester with fake object which should throw a 
 		# type error
-		tester = Map(FakeMapReader())
 		with self.assertRaises(TypeError):
-			tester.setUp()
+			tester = Map(FakeMapReader())
 
 		# test with a map reader. No exception should be thrown,
 		# which means this will pass
 		mr     = MapReader()
 		mr.load(files.good)
 		tester = Map(mr)
-		tester.setUp()
 
 		# test for a syntax error to be thrown when given an
 		# invalid file
 		mr     = MapReader()
 		mr.load(files.bad_col)
-		tester = Map(mr)
+		
 		with self.assertRaises(SyntaxError):
-			tester.setUp()
+			tester = Map(mr)
 
 	def test_isWallOrGoal(self):
 		# initalizing class to test function on
-		tester = Map(self.sample_string)
+		tester = Map(self.sample_string, setUp=False)
 
 		## Test if wall is valid
 		isWall, num_goals = tester.isWallOrGoal(tester.wall, 0)
@@ -123,7 +118,7 @@ class TestMap(unittest.TestCase):
 
 	def test_largeRowValid(self):
 		# initalizing class to test function on
-		tester       = Map(self.sample_string)
+		tester       = Map(self.sample_string, setUp=False)
 		tester.convertToMap()
 
 		# test top row
@@ -149,35 +144,33 @@ class TestMap(unittest.TestCase):
 
 	def test_numColumnsMatch(self):
 		# Test for standard example that should work
-		tester       = Map(self.sample_string)
-		tester.convertToMap()
+		tester       = Map(self.sample_string, setUp=False)
 		self.assertTrue(tester.numColumnsMatch())
 
 		# Test for when the first row is different from the rest
 		string          = copy.copy(self.sample_string)
-		tester          = Map(string)
+		tester          = Map(string, setUp=False)
 		tester.convertToMap()
 		tester.graph[0] = tester.graph[0:-1]
 		self.assertFalse(tester.numColumnsMatch())
 
 		# Test for  when the last row is different from the rest
 		string           = copy.copy(self.sample_string)
-		tester           = Map(string)
+		tester           = Map(string, setUp=False)
 		tester.convertToMap()
 		tester.graph[-1] = tester.graph[0:-1]
 		self.assertFalse(tester.numColumnsMatch())
 
 	def test_topBottomRowsValid(self):
 		# test both top and bottom valid
-		tester            = Map(self.sample_string)
-		tester.convertToMap()
+		tester            = Map(self.sample_string, setUp=False)
 		result, num_goals = tester.topBottomRowsValid(0)
 		self.assertTrue(result)
 		self.assertEquals(num_goals, 0)
 
 		# test top row invalid
 		string             = copy.copy(self.sample_string)
-		tester             = Map(string)
+		tester             = Map(string, setUp=False)
 		tester.convertToMap()
 		tester.graph[0][1] = 'a'
 		result, num_goals  = tester.topBottomRowsValid(0)
@@ -186,7 +179,7 @@ class TestMap(unittest.TestCase):
 
 		# test bottom row invalid
 		string              = copy.copy(self.sample_string)
-		tester              = Map(string)
+		tester              = Map(string, setUp=False)
 		tester.convertToMap()
 		tester.graph[-1][2] = 'a'
 		result, num_goals   = tester.topBottomRowsValid(0)
@@ -195,7 +188,7 @@ class TestMap(unittest.TestCase):
 
 		# test both top and bottom rows invalid
 		string              = copy.copy(self.sample_string)
-		tester              = Map(string)
+		tester              = Map(string, setUp=False)
 		tester.convertToMap()
 		tester.graph[0][1]  = 'a'
 		tester.graph[-1][3] = 'a'
@@ -207,27 +200,26 @@ class TestMap(unittest.TestCase):
 		# test on invalid mid row
 		mr     = MapReader()
 		mr.load(files.bad_mid_row)
-		tester = Map(mr)
-
+		
 		with self.assertRaises(SyntaxError):
-			tester.setUp()
+			tester = Map(mr)
 
 	def test_playerFound(self):
 		# test for example where player is in the map
-		tester            = Map(self.sample_string)
+		tester            = Map(self.sample_string, setUp=False)
 		tester.convertToMap()
 		self.assertTrue(tester.playerFound())
 
 		# test on example where no player is in the map
 		string = copy.copy(self.sample_string)
 		string = string.replace(tester.player, '00')
-		tester = Map(string)
+		tester = Map(string, setUp=False)
 		tester.convertToMap()
 		self.assertFalse(tester.playerFound())
 
 	def test_isValid(self):
 		# test for valid string
-		tester = Map(self.sample_string)
+		tester = Map(self.sample_string, setUp=False)
 		tester.convertToMap()
 		self.assertTrue(tester.isValid())
 
@@ -235,61 +227,60 @@ class TestMap(unittest.TestCase):
 		mr     = MapReader()
 		mr.load(files.good)
 		tester = Map(mr)
-		tester.setUp()
 		self.assertTrue(tester.isValid())
 
 		# test for invalid column count
 		mr     = MapReader()
 		mr.load(files.bad_col)
-		tester = Map(mr)
+		
 		with self.assertRaises(SyntaxError):
-			tester.setUp()
+			tester = Map(mr)
 
 		# test for empty map
 		mr     = MapReader()
 		mr.load(files.empty)
-		tester = Map(mr)
+		
 		with self.assertRaises(SyntaxError):
-			tester.setUp()
+			tester = Map(mr)
 
 		# test on there being no player
 		mr     = MapReader()
 		mr.load(files.no_player)
-		tester = Map(mr)
+		
 		with self.assertRaises(SyntaxError):
-			tester.setUp()
+			tester = Map(mr)
 
 		# test on a string being given
 		mr     = MapReader()
 		mr.load(files.sample)
-		tester = Map(mr)
+		
 		with self.assertRaises(SyntaxError):
-			tester.setUp()
+			tester = Map(mr)
 
 		# test fail on multiple goals
 		mr     = MapReader()
 		mr.load(files.multiple_goals)
-		tester = Map(mr)	
+		tester = Map(mr, setUp=False)	
 		with self.assertRaises(SyntaxError):
 			tester.setUp()
 
 		# test fail on no goals
 		mr     = MapReader()
 		mr.load(files.no_goals)
-		tester = Map(mr)
+		tester = Map(mr, setUp=False)
 		with self.assertRaises(SyntaxError):
 			tester.setUp()
 
 		# test topBottomRowsValid invalid for isValid call
 		mr     = MapReader()
 		mr.load(files.bottom_row_bad)
-		tester = Map(mr)
+		tester = Map(mr, setUp=False)
 		with self.assertRaises(SyntaxError):
 			tester.setUp()
 
 		mr     = MapReader()
 		mr.load(files.top_row_bad)
-		tester = Map(mr)
+		tester = Map(mr, setUp=False)
 		with self.assertRaises(SyntaxError):
 			tester.setUp()
 
@@ -309,7 +300,6 @@ class TestMap(unittest.TestCase):
 		mr     = MapReader()
 		mr.load(files.good)
 		tester = Map(mr)
-		tester.setUp()
 
 		# test on none Move object
 		self.assertFalse(tester.isValidMove("not move"))
@@ -335,7 +325,6 @@ class TestMap(unittest.TestCase):
 		mr     = MapReader()
 		mr.load(files.left)
 		tester = Map(mr)
-		tester.setUp()
 		move   = Move.left('*')
 		self.assertTrue(tester.isValidMove(move))
 
@@ -348,7 +337,6 @@ class TestMap(unittest.TestCase):
 		mr     = MapReader()
 		mr.load(files.left)
 		tester = Map(mr)
-		tester.setUp()
 		tester.makeConfidentMove(Move.left('*'))
 		correct = [['|', '|','|', '|', '|', '|'], \
 		           ['|', '0','*', '*', '0', '$'], \
@@ -359,7 +347,6 @@ class TestMap(unittest.TestCase):
 		mr     = MapReader()
 		mr.load(files.right)
 		tester = Map(mr)
-		tester.setUp()
 		tester.makeConfidentMove(Move.right('*'))
 		correct = [['|', '|', '|', '|', '|'], \
 		           ['|', '0', '*', '*', '$'], \
@@ -370,7 +357,6 @@ class TestMap(unittest.TestCase):
 		mr     = MapReader()
 		mr.load(files.down)
 		tester = Map(mr)
-		tester.setUp()
 		tester.makeConfidentMove(Move.down('1'))
 		correct = [['|', '|', '|', '|', '|'], \
 		           ['|', '*', '*', '0', '$'], \
@@ -386,7 +372,6 @@ class TestMap(unittest.TestCase):
 		mr     = MapReader()
 		mr.load(files.up)
 		tester = Map(mr)
-		tester.setUp()
 		tester.makeConfidentMove(Move.up('1'))
 		correct = [['|', '|', '|', '|', '|'], \
 				   ['|', '*', '*', '0', '$'], \
@@ -401,7 +386,6 @@ class TestMap(unittest.TestCase):
 		mr     = MapReader()
 		mr.load(files.left)
 		tester = Map(mr)
-		tester.setUp()
 		with self.assertRaises(SyntaxError):
 			tester.makeMove(None)
 
@@ -416,7 +400,6 @@ class TestMap(unittest.TestCase):
 		mr     = MapReader()
 		mr.load(files.right)
 		tester = Map(mr)
-		tester.setUp()
 		with self.assertRaises(SyntaxError):
 			tester.makeMove(None)
 
@@ -424,7 +407,6 @@ class TestMap(unittest.TestCase):
 		mr     = MapReader()
 		mr.load(files.right)
 		tester = Map(mr)
-		tester.setUp()
 		tester.makeMove(Move.right('*',size=2))
 		correct = [['|', '|', '|', '|', '|'], \
 		           ['|', '0', '0', '*', '*'], \
@@ -439,7 +421,6 @@ class TestMap(unittest.TestCase):
 		mr     = MapReader()
 		mr.load(files.right)
 		tester = Map(mr)
-		tester.setUp()
 		valid_moves = [Move.right('*'), Move.right('*', size=2)]
 		found_moves = tester.getMoves()
 		self.validate_moves(valid_moves, found_moves)
@@ -448,7 +429,6 @@ class TestMap(unittest.TestCase):
 		mr     = MapReader()
 		mr.load(files.left)
 		tester = Map(mr)
-		tester.setUp()
 		valid_moves = [Move.left('*', size=1), Move.left('*', size=2), Move.right('*')]
 		found_moves = tester.getMoves()
 		self.validate_moves(valid_moves, found_moves)
@@ -457,7 +437,6 @@ class TestMap(unittest.TestCase):
 		mr     = MapReader()
 		mr.load(files.up)
 		tester = Map(mr)
-		tester.setUp()
 		valid_moves = [Move.up('1'), Move.right('*'), Move.right('*', size=2)]
 		found_moves = tester.getMoves()
 		self.validate_moves(valid_moves, found_moves)
@@ -466,7 +445,6 @@ class TestMap(unittest.TestCase):
 		mr     = MapReader()
 		mr.load(files.down)
 		tester = Map(mr)
-		tester.setUp()
 		valid_moves = [Move.down('1'), Move.down('1', size=2), Move.right('*'),  Move.right('*', size=2)]
 		found_moves = tester.getMoves()
 		self.validate_moves(valid_moves, found_moves)
@@ -475,7 +453,6 @@ class TestMap(unittest.TestCase):
 		mr     = MapReader()
 		mr.load(files.no_move)
 		tester = Map(mr)
-		tester.setUp()
 		valid_moves = []
 		found_moves = tester.getMoves()
 		self.validate_moves(valid_moves, found_moves)
@@ -484,7 +461,6 @@ class TestMap(unittest.TestCase):
 		mr     = MapReader()
 		mr.load(files.left_goal)
 		tester = Map(mr)
-		tester.setUp()
 		valid_moves = [Move.left('*', size=1), Move.left('*', size=2), Move.left('*', size=3)]
 		found_moves = tester.getMoves()
 		self.validate_moves(valid_moves, found_moves)
@@ -494,7 +470,6 @@ class TestMap(unittest.TestCase):
 		mr     = MapReader()
 		mr.load(files.quick_solve)
 		tester = Map(mr)
-		tester.setUp()
 		tester.makeConfidentMove(Move.right('*'))
 		self.assertTrue(tester.isSolved())
 
@@ -502,7 +477,6 @@ class TestMap(unittest.TestCase):
 		mr     = MapReader()
 		mr.load(files.up)
 		tester = Map(mr)
-		tester.setUp()
 		tester.makeConfidentMove(Move.up('1'))
 		self.assertFalse(tester.isSolved())
 
@@ -511,7 +485,6 @@ class TestMap(unittest.TestCase):
 		mr     = MapReader()
 		mr.load(files.quick_solve)
 		tester = Map(mr)
-		tester.setUp()
 		
 		# get a copy
 		copy = tester.copy()
@@ -535,7 +508,6 @@ class TestMap(unittest.TestCase):
 		mr     = MapReader()
 		mr.load(files.right)
 		tester = Map(mr)
-		tester.setUp()
 		old_hash = tester.hash
 		copy = tester.copyMove(Move.right('*'))
 		
@@ -543,7 +515,6 @@ class TestMap(unittest.TestCase):
 		mr     = MapReader()
 		mr.load(files.left)
 		tester = Map(mr)
-		tester.setUp()
 
 		# test if tester and copy references are different
 		self.assertNotEqual(copy, tester)
@@ -570,7 +541,6 @@ class TestMap(unittest.TestCase):
 		mr     = MapReader()
 		mr.load(files.right)
 		tester = Map(mr)
-		tester.setUp()
 		old_hash = tester.hash
 		copy = tester.copyConfidentMove(Move.right('*'))
 		good_map = "|||||\n|0**$\n|||||"
@@ -581,7 +551,6 @@ class TestMap(unittest.TestCase):
 		mr     = MapReader()
 		mr.load(files.right)
 		tester = Map(mr)
-		tester.setUp()
 		self.assertEquals(len(tester.validSubtractionMoves(Move.right('*'))), 0)
 		self.assertEquals(len(tester.validSubtractionMoves(Move.up('*'))), 0)
 
@@ -590,7 +559,6 @@ class TestMap(unittest.TestCase):
 		mr     = MapReader()
 		mr.load(files.right)
 		tester = Map(mr)
-		tester.setUp()
 		self.assertEquals(len(tester.validAdditionMoves(Move.left('*'))), 0)
 		self.assertEquals(len(tester.validAdditionMoves(Move.down('*'))), 0)
 
