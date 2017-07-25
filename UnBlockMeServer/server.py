@@ -1,14 +1,15 @@
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
-
-# import UnBlockMe Map and PathFinder. 
+import os
 import sys
 sys.path.append('../unBlockMe')
 from Map.Map import Map
 from PathFinder.TreeSearch import TreeSearch
+from Utility import MovesTo
 
 # Constants keys for the user to use
-MAP_KEY       = "graph"
-DELIMETER_KEY = "delimeter"
+MAP_KEY          = "graph"
+DELIMETER_KEY    = "delimeter"
+GRAPH_OUTPUT_KEY = "graphOutput"
 
 # HTTP response codes
 HTTP_SUCCESS     = 200
@@ -55,13 +56,24 @@ class Server(BaseHTTPRequestHandler):
 			try:
 				# check if delimeter given and initialize map
 				if DELIMETER_KEY in self.headers:
-					board = Map(self.headers[MAP_KEY], delimeter=self.headers[delimeter])
+					board = Map(self.headers[MAP_KEY], delimeter=self.headers[DELIMETER_KEY])
 				else:
 					board = Map(self.headers[MAP_KEY])
 
 				# run pathfinding on the map
 				ts = TreeSearch(board)
-				response_string = ts.getPath()
+
+				# turn path into list of moves
+				path = ts.getPath()
+
+				# give user desired output
+				if GRAPH_OUTPUT_KEY in self.headers and self.headers[GRAPH_OUTPUT_KEY] == str(True):
+					path = MovesTo.toGraphs(board, path)
+				else:
+					path = [move.toStr() for move in path]
+
+				# turn path array into string and set response code to valid
+				response_string = '\n'.join(path)
 				response_code = HTTP_SUCCESS
 			except Exception as ex:
 				# https://stackoverflow.com/questions/9823936/python-how-do-i-know-what-type-of-exception-occurred
