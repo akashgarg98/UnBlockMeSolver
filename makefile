@@ -1,3 +1,7 @@
+server:
+	$(shell cd UnBlockMeServer; make server)
+	# @make server
+
 clean:
 	$(shell find . -name "*.pyc" -exec rm -f {} \;)
 	@echo "*.pyc files deleted."

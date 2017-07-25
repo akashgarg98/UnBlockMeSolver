@@ -86,14 +86,14 @@ class Server(BaseHTTPRequestHandler):
 		
 def run(server_class=HTTPServer, handler_class=Server, port=8080):
 	server_address = ('', port)
-	httpd = server_class(server_address, handler_class)
 	print "Server running on port:", port
+	httpd = server_class(server_address, handler_class)
 	httpd.serve_forever()
 
 if __name__ == "__main__":
-	from sys import argv
-
-	if len(argv) == 2:
-		run(port=int(argv[1]))
+	if len(sys.argv) == 2:
+		run(port=int(sys.argv[1]))
 	else:
-		run()
+		# https://blog.heroku.com/python_and_django
+		run(port=int(os.environ.get("PORT", 8080)))
+
