@@ -1,7 +1,7 @@
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 import os
 import sys
-sys.path.append('../unBlockMe')
+sys.path.append('../UnBlockMe')
 from Map.Map import Map
 from PathFinder.TreeSearch import TreeSearch
 from Utility import MovesTo
