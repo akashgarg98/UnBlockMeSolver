@@ -1,7 +1,6 @@
 from PathFinder import PathFinder
 from Utility.Stack import Stack
 from Queue import Queue
-from test import files
 from Node import Node
 
 class TreeSearch(PathFinder):
