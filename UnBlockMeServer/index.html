@@ -38,7 +38,7 @@
 					<br>
 					Info: This is a representation of the graph that will be solved by the API. A sample for the required input can be seen below.
 					<br>
-					Sample: |||||,|000|,|**0$,|||||
+					Sample: <code>|||||,|000|,|**0$,|||||</code>
 					<br>
 					<br>
 					The sample above can be visualized as:
@@ -52,7 +52,22 @@
 							</font>
 						</p>
 					</ul>
-					For this sample you can see that the <mark>player</mark> is represented by the <code>**</code> in the map. The goal for the player is represented by the <code>$</code>. Lastly, walls are represented by <code>|</code> and they must surround the map else the given map will be declared invalid.
+					For this sample you can see that the <mark>player</mark> is represented by the <code>**</code> in the map. The goal for the player is represented by the <code>$</code>. Walls are represented by <code>|</code> and they must surround the map else the given map will be declared invalid. Lastly, any non-player piece can be represented by any character. So looking at a more complex example:
+					<ul>
+						<p class="text-info">
+							<font face="Courier">
+								|||||||| <br>
+								|102333| <br>
+								|102455| <br>
+								|1**467$ <br>
+								|080067| <br>
+								|08aa6b| <br>
+								|99000b| <br>
+								||||||||
+							</font>
+						</p>
+					</ul>
+					It can be seen that one pice is represented by three ones vertically. These three are treated as one big piece and will only be able to move vertically. Similarly, the two horizontal nines are treated as one big piece and can only move horizontally. 
 				</ul>
 			</ul>
 			<h3>
