@@ -25,7 +25,21 @@
 			</center>
 		</div>
 		<dir>
-			The following are the required and optional fields for a post request to this url. Puzzles will be solved with a <mark>Breadth-first approach</mark>. 
+			The following are the required and optional fields for a post request to this url. Puzzles will be solved with a <mark>Breadth-first approach</mark>. Please note that all fields are placed into the <code>header</code> of the POST request. For sample code, view the <a target="_blank" href="https://github.com/bi3mer/UnBlockMeSolver/blob/master/UnBlockMeServer/serverTest.py#L14">integration tests</a>. A sample curl request can be found below:
+			<br>
+			<br>
+			<ul>
+				<code>
+					curl -X POST \ <br>
+					  https://unblockme.herokuapp.com/ \ <br>
+					  -H 'cache-control: no-cache' \ <br>
+					  -H 'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' \ <br>
+					  -H 'delimeter: ,' \ <br>
+					  -H 'graph: |||||,|000|,|**0$,|||||' \ <br>
+					  -H 'postman-token: ceb04634-8db4-a984-a037-3bde68e7ae92' \ <br>
+					  -F graph=
+				</code>
+			</ul>
 			<br>
 			<h3>
 				Required:
@@ -79,7 +93,7 @@
 					<ul>
 						Type: string
 						<br>
-						Info: This is how the map is broken up by rows. For the sample above, the delimeter would be <code>","</code>. The default <code>delimeter</code> is <code>"\n"</code>.
+						Info: This is how the map is broken up by rows. For the sample above, the delimeter would be <code>,</code>. The default <code>delimeter</code> is <code>\n</code>.
 					</ul>
 					<br>
 					<code>graphOutput</code>
@@ -91,7 +105,7 @@
 						<br>
 						<code>False</code>: A list of moves will be provided in the format of <mark>piece, right, up</mark> where the piece is the piece to be moved, right is how far right the piece should move, and up is how far up the piece should be moved. 
 						<br>
-						<code>True</code>: A list of graphs will be provided, separated by new lines <code>"\n"</code>, that show how the puzzle can be solved optimally. 
+						<code>True</code>: A list of graphs will be provided, separated by new lines <code>\n</code>, that show how the puzzle can be solved optimally. 
 					</ul>
 				</ul>
 			</div>
