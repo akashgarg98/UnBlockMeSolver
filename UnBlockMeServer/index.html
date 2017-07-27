@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang = "en">
 	<head>
+		<!-- jquery -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 		<!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
@@ -22,15 +25,60 @@
 			</center>
 		</div>
 		<dir>
-			Documentation for post request
-
-			Required:
+			The following are the required and optional fields for a post request to this url. Puzzles will be solved with a <mark>Breadth-first approach</mark>. 
+			<br>
+			<h3>
+				Required:
+			</h3>
+			<br>
+			<ul>
+				<code>graph</code>
+				<ul>
+					Type: String 
+					<br>
+					Info: This is a representation of the graph that will be solved by the API. A sample for the required input can be seen below.
+					<br>
+					Sample: |||||,|000|,|**0$,|||||
+					<br>
+					<br>
+					The sample above can be visualized as:
+					<ul>
+						<p class="text-info">
+							<font face="Courier">
+								||||| <br>
+								|000| <br>
+								|**0$ <br>
+								|||||
+							</font>
+						</p>
+					</ul>
+					For this sample you can see that the <mark>player</mark> is represented by the <code>**</code> in the map. The goal for the player is represented by the <code>$</code>. Lastly, walls are represented by <code>|</code> and they must surround the map else the given map will be declared invalid.
+				</ul>
+			</ul>
+			<h3>
+				Optional:
+			</h3>
 			<div>
-				Graph: string
-			</div>
-			Optional:
-			<div>
-				Delimeter: string
+				<ul>
+					<code>delimeter</code>
+					<ul>
+						Type: string
+						<br>
+						Info: This is how the map is broken up by rows. For the sample above, the delimeter would be <code>","</code>. The default <code>delimeter</code> is <code>"\n"</code>.
+					</ul>
+					<br>
+					<code>graphOutput</code>
+					<ul>
+						Type: boolean
+						<br>
+						Info: This decides the kind of output that will be provided to the caller. If this is not provied a list of moves will be given to the user which is where the default for <code>graphOutput</code> is <code>False</code>. 
+						<br>
+						<br>
+						<code>False</code>: A list of moves will be provided in the format of <mark>piece, right, up</mark> where the piece is the piece to be moved, right is how far right the piece should move, and up is how far up the piece should be moved. 
+						<br>
+						<code>True</code>: A list of graphs will be provided, separated by new lines <code>"\n"</code>, that show how the puzzle can be solved optimally. 
+					</ul>
+				</ul>
 			</div>
 		</dir>
 	</body>
