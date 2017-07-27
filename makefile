@@ -1,6 +1,8 @@
 server:
 	$(shell cd UnBlockMeServer; make server)
-	# @make server
+
+heroku:
+	@heroku local web -p 8080
 
 clean:
 	$(shell find . -name "*.pyc" -exec rm -f {} \;)
