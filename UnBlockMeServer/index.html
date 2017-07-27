@@ -82,6 +82,16 @@
 						</p>
 					</ul>
 					It can be seen that one pice is represented by three ones vertically. These three are treated as one big piece and will only be able to move vertically. Similarly, the two horizontal nines are treated as one big piece and can only move horizontally. 
+					<br>
+					<br>
+					In summary:
+					<ul>
+						<mark>$</mark> - Goal <br>
+						<mark>|</mark> - Wall <br>
+						<mark>0</mark> - Empty Space <br>
+						<mark>**</mark> - Player <br>
+						Any other character will be treated as a piece that can be moved.
+					</ul>
 				</ul>
 			</ul>
 			<h3>
@@ -103,12 +113,29 @@
 						Info: This decides the kind of output that will be provided to the caller. If this is not provied a list of moves will be given to the user which is where the default for <code>graphOutput</code> is <code>False</code>. 
 						<br>
 						<br>
-						<code>False</code>: A list of moves will be provided in the format of <mark>piece, right, up</mark> where the piece is the piece to be moved, right is how far right the piece should move, and up is how far up the piece should be moved. 
+						<code>False</code>: A list of moves will be provided in the format of <mark>piece, right, down</mark> where the piece is the piece to be moved, right is how far right the piece should move, and down is how far down the piece should be moved. 
 						<br>
 						<code>True</code>: A list of graphs will be provided, separated by new lines <code>\n</code>, that show how the puzzle can be solved optimally. 
 					</ul>
 				</ul>
 			</div>
+			<h3>
+				Output
+			</h3>
+			<ul>
+				The output is defined by the <code>graphOutput</code> flag mentioned above in the <mark>optional</mark> section for the fields that can go into the POST request. The output is in the format of <mark>piece, right, down</mark>.
+				<br>
+				<br>
+				<ul>
+					Piece - this is the character of the piece that should be moved. If, for example, the piece given is <code>*</code>, then the player piece is the piece that should be moved.
+					<br>
+					Right - this is how far right the defined piece should be moved. If a negative value is given, then it should be moved to the left instead of the right.
+					<br>
+					Down - this is how far down the defined piece should be moved. If a negative value is given, then it should be moved up instead of down.
+				</ul>
+				<br>
+				The other output is in the form of graphs described above in detail. This will be a list of new line separated graphs which shows each move made to result in a solved board in the optimal number of moves. 
+			</ul>
 		</dir>
 	</body>
 </html>
