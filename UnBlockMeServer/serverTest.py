@@ -10,38 +10,39 @@ class TestMap(unittest.TestCase):
 			    "|||||"
 
 	valid_payload = {"graph": valid_map, "delimeter": ","}
+	url = "http://localhost:8080"
 
 	def test_valid_map(self):
-		r = requests.post("http://localhost:8080", headers=self.valid_payload)
+		r = requests.post(self.url, headers=self.valid_payload)
 		self.assertEquals(r.status_code, 200)
 		self.assertEquals(r.text, '*, 2, 0')
 
 	def test_invalid_map(self):
 		# empty
-		r = requests.post("http://localhost:8080", {})
+		r = requests.post(self.url, {})
 		self.assertEquals(r.status_code, 400)
-		r = requests.post("http://localhost:8080", {"graph":""})
+		r = requests.post(self.url, {"graph":""})
 		self.assertEquals(r.status_code, 400)
-		r = requests.post("http://localhost:8080", {"graph":1})
+		r = requests.post(self.url, {"graph":1})
 		self.assertEquals(r.status_code, 400)
 
 		# bad columns
-		r = requests.post("http://localhost:8080", {"graph":"|||,|00|,|||", "delimeter":","})
+		r = requests.post(self.url, {"graph":"|||,|00|,|||", "delimeter":","})
 		self.assertEquals(r.status_code, 400)
 
 		# regular string
-		r = requests.post("http://localhost:8080", {"graph":"asfasdf",})
+		r = requests.post(self.url, {"graph":"asfasdf",})
 		self.assertEquals(r.status_code, 400)
 
 	def test_delimeter(self):
 		# test with bad delimeter
 		payload = {"graph": self.valid_map, "delimeter": "a"}
-		r = requests.post("http://localhost:8080", headers=payload)
+		r = requests.post(self.url, headers=payload)
 		self.assertEquals(r.status_code, 400)
 
 	def test_output_graphs(self):
 		payload = {"graph": self.valid_map, "delimeter": ",", "graphOutput": True}
-		r = requests.post("http://localhost:8080", headers=payload)
+		r = requests.post(self.url, headers=payload)
 		self.assertEquals(r.status_code, 200)
 		complete = self.valid_map + "\n" + "|||||," + \
 			                               "|000|," + \

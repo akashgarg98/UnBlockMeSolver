@@ -1,3 +1,7 @@
+tests:
+	$(shell cd UnBlockMe; make tests)
+	$(shell cd UnBlockMeServer; make tests)
+
 requirements:
 	@pipreqs UnBlockMe --force
 
@@ -15,6 +19,8 @@ lines:
 	@find . -name '*.py' | xargs wc -l
 
 help:
+	@echo "    tests"
+	@echo "        Run tests for all projects."
 	@echo "    requirements"
 	@echo "        Update requirements.txt with all of the required imports for Heroku."
 	@echo "    server"

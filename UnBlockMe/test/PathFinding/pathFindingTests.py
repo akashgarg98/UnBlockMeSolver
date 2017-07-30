@@ -1,7 +1,6 @@
 from PathFinder.PathFinder import PathFinder
 from PathFinder.TreeSearch import TreeSearch
 from Map.MapReader import MapReader
-from PathFinder.Heuristics import *
 from PathFinder.AStar import AStar
 from Map.Move import Move
 from Map.Map import Map
@@ -86,9 +85,8 @@ def testPaths(self, solver, isBFS=False, checkLength=True):
 	self.solve(tester, path)
 	self.assertTrue(tester.isSolved())
 
-	# AStar path will be 16, because the heuristic overestimates
 	if checkLength:
-		self.assertTrue(len(path) == 15 or len(path) == 16 or len(path) == 17)
+		self.assertEquals(len(path), 15)
 
 	end = time.clock()
 	print
@@ -136,17 +134,7 @@ class PathFindingTest(unittest.TestCase):
 		testPaths(self, TreeSearch, isBFS=True)
 
 	def heuristic(self, board):
-		"""
-		Calculate heuristic cost for the given board.
-
-		@type board:  Map
-		@param board: Board being analyzed
-		@rtype:       number
-		@return:      Heuristic cost
-		"""
-		# position of player has to be adjusted based on where the player is
-		return manhattan(board.pieces[board.playerPiece].x, board.pieces[board.playerPiece].y, \
-			             board.pieces[board.goal].x,        board.pieces[board.goal].y)
+		return 0
 
 	def test_AStar(self):
 		testPaths(self, AStar)
