@@ -41,7 +41,7 @@ class TestMap(unittest.TestCase):
 		self.assertEquals(r.status_code, 400)
 
 	def test_output_graphs(self):
-		payload = {"graph": self.valid_map, "delimeter": ",", "graphOutput": True}
+		payload = {"graph": self.valid_map, "delimeter": ",", "graphOutput": "True"}
 		r = requests.post(self.url, headers=payload)
 		self.assertEquals(r.status_code, 200)
 		complete = self.valid_map + "\n" + "|||||," + \

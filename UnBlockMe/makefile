@@ -1,3 +1,11 @@
+OS := $(shell uname)
+
+ifeq ($(OS),Linux)
+	open_cmd = xdg-open
+else
+	open_cmd = open
+endif
+
 tests:
 	@coverage run -m unittest discover -s test -p '*Tests.py'
 	@coverage report
@@ -8,16 +16,16 @@ html_coverage:
 	@if [ -d docs/htmlcov ]; then rm -Rf docs/htmlcov; fi
 	@coverage html
 	@mv htmlcov docs/
-	@open docs/htmlcov/index.html
+	@$(open_cmd) docs/htmlcov/index.html
 
 document:
 	@echo "Generating documentation in docs/documentation folder."
 	@if [ ! -d docs ]; then mkdir docs; fi
 	@if [ -d docs/documentation ]; then rm -Rf docs/documentation; fi
-	@epydoc -v -o docs/documentation --pdf --name "Unblock Me Solver" .
+	@epydoc -v -o docs/documentation --html --name "Unblock Me Solver" --exclude="test" .
 
 open_doc:
-	@open docs/documentation/api.pdf
+	@$(open_cmd) docs/documentation/UnBlockMe-module.html
 
 clean:
 	$(shell find . -name "*.pyc" -exec rm -f {} \;)
