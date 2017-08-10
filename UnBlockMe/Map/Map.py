@@ -453,12 +453,7 @@ class Map(object):
 		@rtype:  boolean
 		@return: if the game has been solved or not
 		"""
-		for y in range(len(self.graph)):
-			for x in range(len(self.graph[y])):
-				if self.graph[y][x] == self.goal:
-					return False
-
-		return True
+		return self.graph[self.pieces[self.goal].y][self.pieces[self.goal].x] != self.goal
 
 	def copy(self):
 		"""
