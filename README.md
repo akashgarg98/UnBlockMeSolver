@@ -7,7 +7,7 @@ This repository aims to create a solver for puzzles found in applications like `
 Packages have been separated into multiple directories each with their own tests.
 
 * ```UnBlockMe``` that all packages will rely on. This has the map class which implements the game as well as the solvers implemented (A\*, BFS, and DFS).
-* ```UnBlockMeServer``` implements a server that can be called to receive solutions for given boards. It will return moves or each board after the move has been made. (NOT IMPLEMENTED)
+* ```UnBlockMeServer``` implements a server that can be called to receive solutions for given boards. It will return moves or each board after the move has been made. Can be found on [heroku](https://unblockme.herokuapp.com/).
 * ```UnBlockMeGame``` implements a GUI that allows users to build their own maps as well as play them. When ```UnBlockMeGenerator``` is finished it will use this library to create new games for the player everytime. (NOT IMPLEMENTED)
 * ```UnBlockMeGenerator``` implements a toolset to generate maps that can be solved. (NOT IMPLEMENTED)
 * ```UnBlockMeResearch``` is a meant as a workspace for looking into new ways to solve the puzzles. Specifically, initial work will be devoted to looking into admissable heuristics for A\*. The links below are initial start points for this work.
